@@ -1,66 +1,79 @@
+body {
+    background: #c35a22;
+    background: linear-gradient(90deg, rgba(195, 90, 34, 1) 0%, rgba(255, 178, 25, 1) 100%);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+   }
+    50% {
+        background-position: 100% 50%;
+   }
+    100% {
+        background-position: 0% 50%;
+   }
+}
 .selector {
-	 font-family: "Montserrat", sans-serif;
-	 font-kerning: none;
-	 font-size: 14px;
-	 padding: 2em;
-	 text-align: center;
+    font-family: "Source Code Pro", monospace;
+    font-size: 14px;
+    padding: 2em;
+    text-align: center;
 }
- .selector * {
-	 box-sizing: border-box;
-	 -webkit-box-sizing: border-box;
+.selector * {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
- .selector h1 {
-	 font-size: 1.5em;
-	 font-weight: 500;
-	 line-height: 1.6;
-	 margin: 0 0 2em;
+.selector h1 {
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.6;
+    margin: 0 0 2em;
 }
- .selector input[type="number"] {
-	 -moz-appearance: textfield;
+.selector input[type="number"] {
+    -moz-appearance: textfield;
 }
- .selector input[type="number"]::-webkit-inner-spin-button, .selector input[type="number"]::-webkit-outer-spin-button {
-	 -webkit-appearance: none;
-	 margin: 0;
+.selector input[type="number"]::-webkit-inner-spin-button, .selector input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
- .selector .Quantity {
-	 display: inline-block;
-	 margin: 0 0 10px;
-	 position: relative;
+.selector .Quantity {
+    display: inline-block;
+    margin: 0 0 10px;
+    position: relative;
 }
- .selector .Quantity input {
-	 color: #443017;
-	 border-radius: 2px;
-	 background-color: #fff;
-	 border: solid 3px #b7b7b7;
-	 font-family: "Montserrat", sans-serif;
-	 font-size: 15px;
-	 font-weight: 300;
-	 min-width: 10px;
-	 height: 30px;
-	 float: left;
-	 display: block;
-	 padding: 0 15px 0 2px;
-	 margin: 0;
-	 text-align: center;
-	 width: 50px;
+.selector .Quantity input {
+    color: white;
+    border-radius: 2px;
+    background: transparent;
+    border: solid 0px #b7b7b7;
+    font-family: "Source Code Pro", monospace;
+    font-size: 60px;
+    font-weight: 60px;
+    min-width: 100px;
+    height: 70px;
+    float: left;
+    display: block;
+    padding: 0 15px 0 2px;
+    margin: 0;
+    text-align: center;
+    width: 50px;
 }
- .selector .Quantity input:focus {
-	 outline: 0;
+.selector .Quantity input:focus {
+    outline: 0;
 }
- .sub {
-	 width: 50px;
-	 height: 50px;
-	 border-radius: 50%;
-	 background: grey;
-	 display: inline-block;
-	 margin: 5px;
+.sub {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    display: inline-block;
+    margin: 5px;
 }
- canvas {
-	 background: white;
+canvas {
+    background: none;
 }
- #StartButton {
-	 width: 100px;
-	 height: 100px;
-	 display: inline-block;
+.guest-host-container {
+    display: inline-block;
 }
- 

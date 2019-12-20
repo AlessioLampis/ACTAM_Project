@@ -1,36 +1,42 @@
-  
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-    <link rel = "stylesheet" href ="style.css" type = "text/css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Polyrhythm Generator_ACTAM PROJECT</title>
+ <link rel = "stylesheet" href ="style.css" type = "text/css">
+  <title>Polyrhythm Generator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
+
 <body>
-    
-    
-    <div class = "selector">
-        <label>Guest</label> 
-        <div class = "Quantity">
-           <input type="number" min ="1" max = "36" id ="guest" step ="1" value = "1" pattern="[1-36]*">
-        </input>
-        </div>
-          
-        <label>Host</label>
-        <div class = "Quantity">
-           <input type="number" min ="1" max = "36" id ="host" step ="1" value = "1" pattern="[1-36]*"></input>
-        </div>
-        <p id = "result">1</p>
-        <canvas id="stage" width="100" height="100"></canvas>
-        <button type="button" id = "StartButton">POP</button>
-        
-        <div id ="guest_circle_on_screen">
-          <div class = "sub"></div>
-        </div>
+
+  <div class="selector" id = "first_page">
+    <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=300 HEIGHT=200></img>
+
+    <label>Guest</label>
+
+    <div class="Quantity">
+      <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
+      </input>
     </div>
-    <script src='polyrhythms_generator.js'></script>
+
+    <label>Host</label>
+
+    <div class="Quantity">
+      <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
+    </div>
+
+    <p id="result">1</p>
+
+    <p>Press "s" to start</p>
+
+    <canvas id="stage" width="100" height="100">
+</canvas>
+
+  </div>
+<script src='polyrhythms_generator.js'></script>
 </body>
+
 </html>
