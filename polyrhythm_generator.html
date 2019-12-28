@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
- <link rel = "stylesheet" href ="style.css" type = "text/css">
+  <!--<link rel = "stylesheet" href ="style.css" type = "text/css">-->
   <title>Polyrhythm Generator</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,32 +11,91 @@
 </head>
 
 <body>
+  
+<div style="overflow:auto;">
+  <div style="float:left;">
+    <button type="button" id="LinBtn" onclick="ShowPage(0)">Linear</button>
+    <button type="button" id="IrrBtn" onclick="ShowPage(1)">Irrational</button>
+    <button type="button" id="IrrBtn" onclick="ShowPage(2)">Clave</button>
+  </div>
+  </div>
+    
+  <div id="pages">
+<div class="page page1">
+      <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=100 HEIGHT=100></img>
+This is page number 1
+      <label>Guest</label>
 
-  <div class="selector" id = "first_page">
-    <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=300 HEIGHT=200></img>
+      <div class="Quantity">
+        <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
+        </input>
+      </div>
 
-    <label>Guest</label>
+      <label>Host</label>
 
-    <div class="Quantity">
-      <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
-      </input>
-    </div>
+      <div class="Quantity">
+        <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
+      </div>
 
-    <label>Host</label>
+      <p id="result">1</p>
 
-    <div class="Quantity">
-      <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
-    </div>
+      <p>Press "s" to start</p>
 
-    <p id="result">1</p>
-
-    <p>Press "s" to start</p>
-
-    <canvas id="stage" width="100" height="100">
+      <canvas id="stage" width="100" height="100">
 </canvas>
 
+    </div>
+<div class="page page2">
+      <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=100 HEIGHT=100></img>
+this is page number 2
+      <label>Guest</label>
+
+      <div class="Quantity">
+        <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
+        </input>
+      </div>
+
+      <label>Host</label>
+
+      <div class="Quantity">
+        <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
+      </div>
+
+      <p id="result">1</p>
+
+      <p>Press "s" to start</p>
+
+      <canvas id="stage" width="100" height="100">
+</canvas>
+
+    </div>
+<div class="page page3">
+      <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=100 HEIGHT=100></img>
+This is page number three
+      <label>Guest</label>
+
+      <div class="Quantity">
+        <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
+        </input>
+      </div>
+
+      <label>Host</label>
+
+      <div class="Quantity">
+        <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
+      </div>
+
+      <p id="result">1</p>
+
+      <p>Press "s" to start</p>
+
+      <canvas id="stage" width="100" height="100">
+</canvas>
+
+    </div>
+
   </div>
-<script src='polyrhythms_generator.js'></script>
+  <!--<script src='polyrhythms_generator.js'></script>-->
 </body>
 
 </html>

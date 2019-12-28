@@ -2,9 +2,9 @@ var guest = document.getElementById("guest");
 var host = document.getElementById("host");
 var tatum = 1;
 const container = document.getElementById("guest_circle_on_screen");
-var tatum_elements = [];
 var host_colors = [];
 var guest_colors = [];
+var CurrentPage = 0;
 
 var canvas = document.getElementById("stage");
 var ctx = canvas.getContext("2d");
@@ -17,8 +17,18 @@ var requestAnimationFrame =
 var pixelsPerFrame = 5;
 var angle = Math.PI / 2;
 
-//TATUM
+//VIEW PAGE
+function ShowPage(n){
+  var x = document.getElementsByClassName("page");
+  var buttons = document.getElementsByTagName("button");
+  x[CurrentPage].style.display = "none";
+  buttons[CurrentPage].style.backgroundColor = "";
+  CurrentPage = n;
+  x[n].style.display = "block";
+  buttons[n].style.backgroundColor = "blue";
+};
 
+//TATUM
 guest.onchange = function() {
   document.getElementById("guest").value = Math.floor(guest.value);
   if (guest.value > 8) {

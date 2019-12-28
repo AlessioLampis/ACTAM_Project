@@ -1,12 +1,11 @@
 body {
-  background: rgb(195, 90, 34);
   background: linear-gradient(
-    90deg,
-    rgba(195, 90, 34, 1) 0%,
-    rgba(255, 178, 25, 1) 100%
-  );
+    45deg,
+    #2F4454,
+    #376E6F,
+    #1C3334);
   background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  animation: gradientBG 20s ease infinite;
 }
 @keyframes gradientBG {
   0% {
@@ -20,11 +19,13 @@ body {
   }
 }
 
-.selector {
+.page {
+  display: none;
   font-family: "Source Code Pro", monospace;
   // font-kerning: none;
+  width: 100%;
   font-size: 14px;
-  padding: 2em;
+  padding-top: 15%;
   text-align: center;
   & * {
     box-sizing: border-box;
@@ -73,19 +74,10 @@ body {
   }
 }
 
-.sub {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: white;
-  display: inline-block;
-  margin: 5px;
-}
-
 canvas {
   background: none;
 }
 
-.guest-host-container {
-  display: inline-block;
-}
+
+
+
