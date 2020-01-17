@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <!--<link rel = "stylesheet" href ="style.css" type = "text/css">-->
+  <link rel = "stylesheet" href ="style.css" type = "text/css">
   <title>Polyrhythm Generator</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,78 +11,105 @@
 </head>
 
 <body>
-  
-<div style="overflow:auto;">
-  <div style="float:left;">
-    <button type="button" id="LinBtn" onclick="ShowPage(0)">Linear</button>
-    <button type="button" id="IrrBtn" onclick="ShowPage(1)">Irrational</button>
-    <button type="button" id="IrrBtn" onclick="ShowPage(2)">Clave</button>
-  </div>
-  </div>
-    
+
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path"  d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
+
   <div id="pages">
-<div class="page page1">
-      <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=100 HEIGHT=100></img>
-This is page number 1
+    <div class="firstpage">
+      <span class="firstlogo">PolyPie</span>
+      <p class="firstsub">Visualize complex rhythms with the help of pies</p>
+      <h1 class="firstbtn"id="Start">Start</h1>
+    </div>
+
+
+    <div class="page page1">
+
+      <span class="logo">PolyPie</span> 
+    <div style="overflow:auto;">
+      <div style="float:left;">
+        <button type="button" id="LinBtn" class = "LinBtn" >Cross Rhythm</button>
+        <button type="button" id="IrrBtn" class="IrrBtn"   >Polymeter</button>
+        <button type="button" id="ClvBtn" class="ClvBtn"   >Clave</button>
+      </div>
+    </div>
+      
+     
+
+      <div class="Quantity">
+         <label>Guest</label>
+        <input type="number" min="1" max="36" id="guest1" step="1" value="1" pattern="[1-8]*">
+        </input>
+      </div>
+
+    <div class = "semicolon">:</div>
+
+      <div class="Quantity">
+        <label>Host</label>
+        <input type="number" min="1" max="8" id="host1" step="1" value="1" pattern="[1-8]*"></input>
+      </div>
+
+      <p id="result">1</p>
+
+      <p class= "press_s">Press "s" to start</p>
+
+
+    </div>
+
+    <div class="page page2">
+      <span class="logo">PolyPie</span>   
+    <div style="overflow:auto;">
+      <div style="float:left;">
+        <button type="button" id="LinBtn" class = "LinBtn">Cross Rhythm</button>
+        <button type="button" id="IrrBtn" class="IrrBtn"  >Polymeter</button>
+        <button type="button" id="ClvBtn" class="ClvBtn"  >Clave</button>
+      </div>
+    </div>
       <label>Guest</label>
 
       <div class="Quantity">
-        <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
+        <input type="number" min="1" max="36" id="guest2" step="1" value="1" pattern="[1-8]*">
         </input>
       </div>
 
       <label>Host</label>
 
       <div class="Quantity">
-        <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
+        <input type="number" min="1" max="8" id="host2" step="1" value="1" pattern="[1-8]*"></input>
       </div>
 
       <p id="result">1</p>
 
       <p>Press "s" to start</p>
 
-      <canvas id="stage" width="100" height="100">
-</canvas>
 
     </div>
-<div class="page page2">
-      <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=100 HEIGHT=100></img>
-this is page number 2
+
+    <div class="page page3">
+      <span class="logo">PolyPie</span> 
+    <div style="overflow:auto;">
+      <div style="float:left;">
+        <button type="button" id="LinBtn" class = "LinBtn">Cross Rhythm</button>
+        <button type="button" id="IrrBtn" class="IrrBtn"  >Polymeter</button>
+        <button type="button" id="ClvBtn" class="ClvBtn"  >Clave</button>
+      </div>
+    </div>
+      
       <label>Guest</label>
 
       <div class="Quantity">
-        <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
+        <input type="number" min="1" max="36" id="guest3" step="1" value="1" pattern="[1-8]*">
         </input>
       </div>
 
       <label>Host</label>
 
       <div class="Quantity">
-        <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
-      </div>
-
-      <p id="result">1</p>
-
-      <p>Press "s" to start</p>
-
-      <canvas id="stage" width="100" height="100">
-</canvas>
-
-    </div>
-<div class="page page3">
-      <img src="https://s.cdpn.io/31787/shoptalk.png" alt="Polyrhythm Generator" WIDTH=100 HEIGHT=100></img>
-This is page number three
-      <label>Guest</label>
-
-      <div class="Quantity">
-        <input type="number" min="1" max="36" id="guest" step="1" value="1" pattern="[1-8]*">
-        </input>
-      </div>
-
-      <label>Host</label>
-
-      <div class="Quantity">
-        <input type="number" min="1" max="8" id="host" step="1" value="1" pattern="[1-8]*"></input>
+        <input type="number" min="1" max="8" id="host3" step="1" value="1" pattern="[1-8]*"></input>
       </div>
 
       <p id="result">1</p>
@@ -95,7 +122,7 @@ This is page number three
     </div>
 
   </div>
-  <!--<script src='polyrhythms_generator.js'></script>-->
+  <script src='polyrhythms_generator.js'></script>
 </body>
 
 </html>

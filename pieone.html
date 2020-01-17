@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <link rel = "stylesheet" href ="pieone.css" type = "text/css">
+  <title>Polyrhythm Generator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.84/Tone.js"></script>
+
+        <canvas width='300' height='300' id = 'myCanvas'></canvas>
+
+        <canvas width='300' height='300' id = 'myCanvas2'></canvas>
+        
+        
+        <div class="inputcontainer">
+              <label>BPM</label>
+        
+        
+              <input id="bpm" class="w3-input w3-border w3-round" type="number" min="30" max="300" value = "120">
+              </input>
+        <button id = "Btn" type= "button">Start</button>
+        </div>
+<script src='pieone.js'></script>
+</body>
+
+</html>
