@@ -11,7 +11,7 @@
 </head>
 
 <body>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.84/Tone.js"></script>
   <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
   <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path"  d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
   <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
@@ -55,7 +55,7 @@
 
       <p id="result">1</p>
 
-      <p class= "press_s">Press "s" to start</p>
+      <button class= "startbtn">PLAY</button>
 
 
     </div>
@@ -121,6 +121,28 @@
 
     </div>
 
+    <div class="page page4">
+        <span class="logo">PolyPie</span> 
+        <label>Cross rhythm</label>
+      <div style="overflow:auto;">
+        <div style="float:left;">
+          
+        </div>
+      </div>
+        
+      <canvas width='300' height='300' id = 'myCanvas'></canvas>
+
+      <canvas width='300' height='300' id = 'myCanvas2'></canvas>
+      
+      
+      <div class="inputcontainer">
+          <label>BPM</label>
+    
+    
+          <input id="bpm" class="w3-input w3-border w3-round" type="number" min="30" max="300" value = "120">
+          </input>
+    <button id = "Btn" type= "button">Start</button>
+    </div>
   </div>
   <script src='polyrhythms_generator.js'></script>
 </body>
