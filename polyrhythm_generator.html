@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <link rel = "stylesheet" href ="style.css" type = "text/css">
+  <link rel="stylesheet" href="style.css" type="text/css">
   <title>Polyrhythm Generator</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,64 +11,94 @@
 </head>
 
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.84/Tone.js"></script>
-  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
-  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path"  d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
-  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
-  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
-  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
-  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120" preserveAspectRatio="xMidYMid meet"><path class= "cube-path" d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 "></path></svg></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.84/Tone.js"></script>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120"
+      preserveAspectRatio="xMidYMid meet">
+      <path class="cube-path"
+        d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 ">
+      </path>
+    </svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120"
+      preserveAspectRatio="xMidYMid meet">
+      <path class="cube-path"
+        d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 ">
+      </path>
+    </svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120"
+      preserveAspectRatio="xMidYMid meet">
+      <path class="cube-path"
+        d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 ">
+      </path>
+    </svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120"
+      preserveAspectRatio="xMidYMid meet">
+      <path class="cube-path"
+        d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 ">
+      </path>
+    </svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120"
+      preserveAspectRatio="xMidYMid meet">
+      <path class="cube-path"
+        d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 ">
+      </path>
+    </svg></div>
+  <div class="cube"><svg version="1.1" xmlns='http://www.w3.org/2000/svg' viewBox="0 250 600 120"
+      preserveAspectRatio="xMidYMid meet">
+      <path class="cube-path"
+        d="M 400 300 A 50 50 0 1 1 200 300 A 50 50 0 1 1 400 300 L 200 300 C 200 300 200 212 298 199 L 300 400 Q 256 399 229 369 L 368 230 Q 428 293 371 370 L 230 234 ">
+      </path>
+    </svg></div>
 
   <div id="pages">
     <div class="firstpage">
       <span class="firstlogo">PolyPie</span>
       <p class="firstsub">Visualize complex rhythms with the help of pies</p>
-      <h1 class="firstbtn"id="Start">Start</h1>
+      <h1 class="firstbtn" id="Start">Start</h1>
     </div>
 
 
     <div class="page page1">
 
-      <span class="logo">PolyPie</span> 
-    <div style="overflow:auto;">
-      <div style="float:left;">
-        <button type="button" id="LinBtn" class = "LinBtn" >Cross Rhythm</button>
-        <button type="button" id="IrrBtn" class="IrrBtn"   >Polymeter</button>
-        <button type="button" id="ClvBtn" class="ClvBtn"   >Clave</button>
+      <span class="logo">PolyPie</span>
+      <div style="overflow:auto;">
+        <div style="float:left;">
+          <button type="button" id="LinBtn" class="LinBtn">Cross Rhythm</button>
+          <button type="button" id="IrrBtn" class="IrrBtn">Polymeter</button>
+          <button type="button" id="ClvBtn" class="ClvBtn">Clave</button>
+        </div>
       </div>
-    </div>
-      
-     
+
+
 
       <div class="Quantity">
-         <label>Guest</label>
+        <label>Guest</label>
         <input type="number" min="1" max="36" id="guest1" step="1" value="1" pattern="[1-8]*">
         </input>
       </div>
 
-    <div class = "semicolon">:</div>
+      <div class="semicolon">:</div>
 
       <div class="Quantity">
         <label>Host</label>
         <input type="number" min="1" max="8" id="host1" step="1" value="1" pattern="[1-8]*"></input>
       </div>
-
+      <p>tatum value:</p>
       <p id="result">1</p>
+      <p id="startbtn">Start</p>
 
-      <button class= "startbtn">PLAY</button>
 
 
     </div>
 
     <div class="page page2">
-      <span class="logo">PolyPie</span>   
-    <div style="overflow:auto;">
-      <div style="float:left;">
-        <button type="button" id="LinBtn" class = "LinBtn">Cross Rhythm</button>
-        <button type="button" id="IrrBtn" class="IrrBtn"  >Polymeter</button>
-        <button type="button" id="ClvBtn" class="ClvBtn"  >Clave</button>
+      <span class="logo">PolyPie</span>
+      <div style="overflow:auto;">
+        <div style="float:left;">
+          <button type="button" id="LinBtn" class="LinBtn">Cross Rhythm</button>
+          <button type="button" id="IrrBtn" class="IrrBtn">Polymeter</button>
+          <button type="button" id="ClvBtn" class="ClvBtn">Clave</button>
+        </div>
       </div>
-    </div>
       <label>Guest</label>
 
       <div class="Quantity">
@@ -90,15 +120,15 @@
     </div>
 
     <div class="page page3">
-      <span class="logo">PolyPie</span> 
-    <div style="overflow:auto;">
-      <div style="float:left;">
-        <button type="button" id="LinBtn" class = "LinBtn">Cross Rhythm</button>
-        <button type="button" id="IrrBtn" class="IrrBtn"  >Polymeter</button>
-        <button type="button" id="ClvBtn" class="ClvBtn"  >Clave</button>
+      <span class="logo">PolyPie</span>
+      <div style="overflow:auto;">
+        <div style="float:left;">
+          <button type="button" id="LinBtn" class="LinBtn">Cross Rhythm</button>
+          <button type="button" id="IrrBtn" class="IrrBtn">Polymeter</button>
+          <button type="button" id="ClvBtn" class="ClvBtn">Clave</button>
+        </div>
       </div>
-    </div>
-      
+
       <label>Guest</label>
 
       <div class="Quantity">
@@ -117,34 +147,37 @@
       <p>Press "s" to start</p>
 
       <canvas id="stage" width="100" height="100">
-</canvas>
+      </canvas>
 
     </div>
 
     <div class="page page4">
-        <span class="logo">PolyPie</span> 
-        <label>Cross rhythm</label>
+      <span class="logo">PolyPie</span>
+      <label>Cross rhythm</label>
+      <p id="backbtn">Back</p>
       <div style="overflow:auto;">
         <div style="float:left;">
-          
+
         </div>
       </div>
-        
-      <canvas width='300' height='300' id = 'myCanvas'></canvas>
 
-      <canvas width='300' height='300' id = 'myCanvas2'></canvas>
-      
-      
+      <canvas width='300' height='300' id='myCanvas'></canvas>
+      <canvas width='300' height='300' id='myCanvas2'></canvas>
+      <canvas width='300' height='300' id='myCanvas3'></canvas>
       <div class="inputcontainer">
-          <label>BPM</label>
-    
-    
-          <input id="bpm" class="w3-input w3-border w3-round" type="number" min="30" max="300" value = "120">
-          </input>
-    <button id = "Btn" type= "button">Start</button>
+        <label class="coset">
+          <input id = "coset_toggle" type="checkbox">
+          <span class="slider"></span>
+        </label>
+        <label>BPM</label>
+        <input id="bpm" class="bpmpage1" type="number" min="30" max="300" value="120">
+        </input>
+      </div>
+      <p id="togglebtn">Stop</p>
+
+
     </div>
-  </div>
-  <script src='polyrhythms_generator.js'></script>
+    <script src='polyrhythms_generator.js'></script>
 </body>
 
 </html>
