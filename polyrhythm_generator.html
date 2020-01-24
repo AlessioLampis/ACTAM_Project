@@ -164,14 +164,27 @@
       <canvas width='300' height='300' id='myCanvas'></canvas>
       <canvas width='300' height='300' id='myCanvas2'></canvas>
       <canvas width='300' height='300' id='myCanvas3'></canvas>
+
       <div class="inputcontainer">
-        <label class="coset">
+        <div  class="coset">
+          <label>coset OFF</label>
+        <label>
+         
           <input id = "coset_toggle" type="checkbox">
           <span class="slider"></span>
         </label>
+        <label>coset ON</label>
+      </div>
+      <div class="bpmpage1">
         <label>BPM</label>
-        <input id="bpm" class="bpmpage1" type="number" min="30" max="300" value="120">
+        <input id="bpm"  type="number" min="30" max="300" value="120">
         </input>
+      </div>
+      <div id="coset_switch" >
+        <label>coset switch</label>
+        <input type="number" min="1" max="36" step="1" value="1" pattern="[1-8]*">
+        </input>
+      </div>
       </div>
       <p id="togglebtn">Stop</p>
 
