@@ -5,14 +5,16 @@
 // FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
 // ADD SHIFTING IN COSET
 // MAKE THE COSET PLAY
+// stop the coset when changes are appied on it
 // CHANGE THE SOUNDS 
 // ADD ANOTHER SET OF SOUNDS
 // FIX ANIMATION OF PIES
+// Fix positioning and add transition between pages, especially the first page's shadow
 // START TO DEVELOP POLYMETER SECTION
 // ACCEPT ONLY POSITIVE VALUES ON HOST AND HUEST!!
 // Sometimes pies stop to rotate
 // do a research about visualizing polyrhythm in circular fashion
-// MATTIA GAY and also ANTONIO but just a bit...
+// 
 
 ///
 //**MODEL**//
