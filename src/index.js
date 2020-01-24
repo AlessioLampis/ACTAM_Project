@@ -1,3 +1,5 @@
+import 'tone';
+import './style.css';
 
 ///
 //**THINGS TO DO**//
