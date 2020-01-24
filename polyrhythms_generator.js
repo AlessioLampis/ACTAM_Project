@@ -9,9 +9,9 @@
 // ADD ANOTHER SET OF SOUNDS
 // FIX ANIMATION OF PIES
 // START TO DEVELOP POLYMETER SECTION
-
-
-
+// ACCEPT ONLY POSITIVE VALUES ON HOST AND HUEST!!
+// Sometimes pies stop to rotate
+// do a research about visualizing polyrhythm in circular fashion
 
 
 ///
@@ -125,8 +125,8 @@ var beats2 = [];
 var coset = false;
 var N = 2;
 var beatsCos = [];
-
-
+var cosaccents = accents2;
+var s = 1; //switch of the coset
 
 /////
 //**FUNCTIONS**//
@@ -208,6 +208,10 @@ guest.onchange = function () { //Guest value input
   if (guest.value == 0) {
     guest.value = 1;
   }
+
+  if (guest.value < 0){
+    guest.value = 1;
+  }
   tatum_calculation();
 };
 
@@ -221,6 +225,9 @@ host.onchange = function () { //Host value input
     alert("Host value can't exceed 8");
   }
   if (host.value == 0) {
+    host.value = 1;
+  }
+  if (host.value < 0){
     host.value = 1;
   }
   tatum_calculation();
@@ -402,12 +409,12 @@ function drawPie2(progress) {  //HOST PIE
 //DRAW COSET IN CROSS RHYTHM
 
 function check_coset() {  //Change the N in animate function
-  if (coset == false) {
-    N = 2;
+  if (coset == false) { //if N is 2, coset is disabled. It means that theta angle
+    N = 3;              // goes +alpha/N (because it is called two times during a rotation)
   }
   else {
-    N = 3;
-  };
+    N = 2; //when coset is added, animate function is called 3 times, so theta
+  };       // must be +alpha/3
 };
 
 
@@ -419,7 +426,7 @@ function drawCoset(progress) {
     ctx3.strokeStyle = "#dce1d5";
     ctx3.moveTo(x1, y1);
     //ctx2.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
-    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + j * alpha + progress * alpha + theta;
+    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + j * alpha + progress * alpha + theta + s*alpha;
     ctx3.arc(x1, y1, rad2, gamma, gamma + alpha);
     ctx3.lineTo(x1, y1);
     ctx3.fillStyle = j == 0 ? "yellow" : beat ? "red" : "black";
@@ -470,7 +477,7 @@ function calculate_pie() {
   beats = [];
   beats2 = [];
 
-  var cosaccents = accents2;
+  cosaccents = accents2;
 
   for (var i = 0; i < sub; i++) {
     i % accents == 0 ? beats.push(true) : beats.push(false);
@@ -481,7 +488,7 @@ function calculate_pie() {
   };
 
   for (var x = 0; x < sub; x++) {
-    j % cosaccents == 0 ? beatsCos.push(true) : beatsCos.push(false);
+    x % cosaccents == 0 ? beatsCos.push(true) : beatsCos.push(false);
   };
 
 };
