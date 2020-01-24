@@ -86,7 +86,7 @@ cymbal.toMaster();
 let CrossLoop = new Tone.Loop(play, "4n");
 CrossLoop.start(0);
 
-//Pop's circle animation
+//Pop's circle animation (not used yet)
 const container = document.getElementById("guest_circle_on_screen");
 var pixelsPerFrame = 5;
 var angle = Math.PI / 2;
@@ -520,6 +520,8 @@ function play(time) {
 //**CONTROLLER**//
 ////
 
+document.addEventListener('DOMContentLoaded', function(event) {
+  document.getElementsByClassName("page")[0].style.display = "none"});
 
 document.getElementById("startbtn").onclick = function () {
 
