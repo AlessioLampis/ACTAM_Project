@@ -520,8 +520,11 @@ function play(time) {
 //**CONTROLLER**//
 ////
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  document.getElementsByClassName("page")[0].style.display = "none"});
+//trying to fix the problem while reload
+//document.addEventListener('DOMContentLoaded', function(event) { document.getElementsByClassName("page")[0].style.display = "none"});
+document.documentElement.addEventListener('mousedown', function(){
+  if (Tone.context.state !== 'running') Tone.context.resume();
+});
 
 document.getElementById("startbtn").onclick = function () {
 
