@@ -338,19 +338,24 @@ margin-left:45%;
   transition: all 250ms linear; 
 }
 .coset{
-  position: absolute;
+  position: relative;
   display: inline-block;
   width: 60px;
   height: 20px;
-  margin-left: 0px;
+  margin-left: -150px;
+  bottom: -20px;
 }
 .coset input { 
   opacity: 0;
   width: 0;
   height: 0;
-
 }
-
+.coset_on{
+  bottom: -20px
+}
+.coset_off{
+  bottom: -20px;
+}
 .inputcontainer{
   position: relative;
   display: inline-block;
@@ -360,11 +365,18 @@ margin-left:45%;
   position: relative;
   left: -300px;
 }
+.bpmpage1 input {
+  font-family: "Source Code Pro", monospace;
+}
 
 #coset_switch{
   position: relative;
   margin-left: 300px;
   bottom: 20px;
+}
+
+#coset_switch input {
+  font-family: "Source Code Pro", monospace;
 }
 
 .slider {
@@ -416,7 +428,7 @@ input:checked + .slider:before {
 
   text-align: center;
   text-decoration: none;
-  margin: 0px 0px 5px;
+  
   font-size: 16px;
   float: center;
   cursor: pointer; 
