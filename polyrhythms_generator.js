@@ -85,8 +85,21 @@ bd.toMaster();
 cymbal.toMaster();
 
 //Tone.js LOOP
-let CrossLoop = new Tone.Loop(play, "4n");
-CrossLoop.start(0);
+//let CrossLoop = new Tone.Loop(play, "4n");
+//CrossLoop.start(0);
+
+var seq = new Tone.Sequence(function(time, note){
+  bd.triggerAttackRelease(note, "+0.05", time);
+//straight quater notes
+}, ["C4", , , "A4"], "4n");
+seq.start(0);
+
+var animation = new Tone.Loop(function(time){
+  Tone.Draw.schedule(function(){
+    play();
+  }, time)
+}, "4n");
+animation.start(0)
 
 //Pop's circle animation (not used yet)
 const container = document.getElementById("guest_circle_on_screen");
@@ -475,7 +488,7 @@ function calculate_pie() {
   accents = Math.floor(guest1.value);
   accents2 = Math.floor(host1.value);
   alpha = 2 * Math.PI / sub;
-  Tone.Transport.bpm.value = bpm * Math.floor(host1.value);
+  //Tone.Transport.bpm.value = bpm * Math.floor(host1.value);
   beats = [];
   beats2 = [];
 
@@ -504,16 +517,6 @@ function play(time) {
   if (coset == true) {
     animate({ timing: backEaseOut, draw: drawCoset, duration: (60000) / (bpm) });
   };
-
-  if (beats[counter % sub]) {
-    bd.triggerAttackRelease("c2", 0.1, time);
-
-  };
-  if (beats2[counter % sub]) {
-    cymbal.triggerAttackRelease("c2", 0.1, time);
-  };
-
-  counter = counter + 1;
 };
 
 
@@ -533,7 +536,7 @@ document.getElementById("startbtn").onclick = function () {
   Tone.start();
   ShowPage(3);
   calculate_pie();
-  Tone.Transport.start();
+  Tone.Transport.start("+0.1");
 
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
