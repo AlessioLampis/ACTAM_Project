@@ -27,10 +27,6 @@ let end = 0;
 var counter = 0;
 const tm = document.querySelector("#bpm")
 var bpm = Math.floor(tm.value);
-tm.onchange = function () {
-  bpm = Math.floor(tm.value);
-  Tone.Transport.bpm.value = bpm * Math.floor(host1.value);
-};
 
 
 //Tatum for every page (right now, we use only tatum1 for cross ryhthm)
@@ -435,6 +431,7 @@ function check_coset() {  //Change the N in animate function
 
 
 function drawCoset(progress) {
+  
   beatsCos.forEach((beat, j) => {
     ctx3.beginPath();
     ctx3.lineWidth = "1.5";
@@ -512,8 +509,8 @@ function calculate_pie() {
 
 function play(time) {
 
-  animate({ timing: backEaseOut, draw: drawPie, duration: (60000) / (bpm) });
-  animate({ timing: backEaseOut, draw: drawPie2, duration: (60000) / (bpm) });
+  animate({ timing: backEaseOut, draw: drawPie, duration: (60000) / (Tone.Transport.bpm.value) });
+  animate({ timing: backEaseOut, draw: drawPie2, duration: (60000) / (Tone.Transport.bpm.value) });
   if (coset == true) {
     animate({ timing: backEaseOut, draw: drawCoset, duration: (60000) / (bpm) });
   };
@@ -532,8 +529,8 @@ document.documentElement.addEventListener('mousedown', function(){
 });
 
 document.getElementById("startbtn").onclick = function () {
-
   Tone.start();
+  Tone.Transport.bpm.value = bpm * (sub/ Math.floor(host1.value));
   ShowPage(3);
   calculate_pie();
   Tone.Transport.start("+0.1");
@@ -566,5 +563,11 @@ document.getElementById("coset_toggle").onclick = function () {
     coset = false;
   }
 }
+ //CHANGE OF BPM
+tm.onchange = function () {
+  bpm = Math.floor(tm.value);
+  Tone.Transport.bpm.value = bpm * (sub/ Math.floor(host1.value));
+};
+
 
 
