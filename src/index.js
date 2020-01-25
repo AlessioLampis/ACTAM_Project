@@ -1,4 +1,4 @@
-import 'tone';
+var Tone = require('tone');
 import './style.css';
 
 ///
@@ -27,6 +27,9 @@ let end = 0;
 var counter = 0;
 const tm = document.querySelector("#bpm")
 var bpm = Math.floor(tm.value);
+document.onmousedown = () => {
+  if (Tone.context.state !== "running") Tone.context.resume()
+}
 tm.onchange = function () {
   bpm = Math.floor(tm.value);
   Tone.Transport.bpm.value = bpm * Math.floor(host1.value);
