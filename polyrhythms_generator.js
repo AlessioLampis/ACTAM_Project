@@ -133,7 +133,8 @@ var rad3 = 100;
 var sub = 6; //number of tatum
 var guest_accents = 3; // guest value
 var host_accents = 2; // host value
-var alpha = 2 * Math.PI / sub; //angle of tatum reperesentation
+var alpha_guest = 2 * Math.PI /guest_accents ; //angle of tatum reperesentation
+var alpha_host = 2 * Math.PI /host_accents ; //angle of tatum reperesentation
 var guest_beats = []; // guest array for tatum representation
 var host_beats = []; //host array for tatum representation
 var free_guest_beats = [];
@@ -144,7 +145,8 @@ var N = 2; //number used for animate with or without  coset
 var coset_beat = []; // coset array used in tatum representaion
 var coset_accents = guest_accents; // coset accents
 var s = 1; //switch of the coset
-var theta = 0; 
+var theta_guest = 0;
+var theta_host =0;
 
 /////
 //**FUNCTIONS**//
@@ -387,7 +389,7 @@ function animate_guest({ timing, draw, duration }) { //animate function of DrawP
       requestAnimationFrame(animate);
     }
   });
-  theta_guest += alpha_guest/N;
+  theta_guest += alpha_guest;
   theta_guest = theta_guest % (2 * Math.PI);
 
 };
@@ -414,7 +416,7 @@ function animate_host({ timing, draw, duration }) { //animate function of DrawPi
       requestAnimationFrame(animate);
     }
   });
-  theta_host += alpha_host/N
+  theta_host += alpha_host;
   theta_host = theta_host % (2 * Math.PI);
 
 };
@@ -428,8 +430,8 @@ function drawPie_guest(progress) {  //GUEST PIE
     ctx.strokeStyle = "#dce1d5";
     ctx.moveTo(x0, y0);
     //ctx.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
-    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + i * alpha + progress * alpha + theta;
-    ctx.arc(x0, y0, rad, gamma, gamma + alpha);
+    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha_guest + i * alpha_guest + progress * alpha_guest + theta_guest;
+    ctx.arc(x0, y0, rad, gamma, gamma + alpha_guest);
     ctx.lineTo(x0, y0);
     ctx.fillStyle = i == 0 ? "yellow" : beat ? "red" : "black";
     ctx.fill();
@@ -444,8 +446,8 @@ function drawPie_host(progress) {  //HOST PIE
     ctx2.strokeStyle = "#dce1d5";
     ctx2.moveTo(x1, y1);
     //ctx2.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
-    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + j * alpha + progress * alpha + theta;
-    ctx2.arc(x1, y1, rad2, gamma, gamma + alpha);
+    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha_host + j * alpha_host + progress * alpha_host + theta_host;
+    ctx2.arc(x1, y1, rad2, gamma, gamma + alpha_host);
     ctx2.lineTo(x1, y1);
     ctx2.fillStyle = j == 0 ? "yellow" : beat ? "red" : "black";
     ctx2.fill();
@@ -502,7 +504,7 @@ function check_coset() {  //Change the N in animate function
 
 function drawPie_coset(progress) {
   
-  coset_beat.forEach((beat, j) => {
+  free_coset_beat.forEach((beat, j) => {
     ctx3.beginPath();
     ctx3.lineWidth = "1.5";
     ctx3.strokeStyle = "#dce1d5";
@@ -555,7 +557,9 @@ function calculate_pie() {
   guest_accents = Math.floor(guest1.value); 
   host_accents = Math.floor(host1.value);
   coset_accents = guest_accents;
-  alpha = 2 * Math.PI / sub;
+  alpha_guest = 2 * Math.PI / guest_accents;
+  alpha_host= 2 * Math.PI / host_accents;
+
   Tone.Transport.bpm.value = bpm;
   //array with tatum
   guest_beats = []; 
