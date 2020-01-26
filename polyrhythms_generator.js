@@ -49,35 +49,36 @@ var host = document.getElementById("host1");
 
 var bd = new Tone.MembraneSynth({
   pitchDecay: 0.05,
-  octaves: 4,
+  octaves: 1,
   oscillator: {
-    type: "fmsine",
-    phase: 140,
+    type: "amsine",
+    phase: 100,
     modulationType: "sine",
-    modulationIndex: 0.8,
+    modulationIndex: 0.1,
     partials: [1] //1,0.1,0.01,0.01
   },
   envelope: {
-    attack: 0.01,
-    decay: 0.74,
-    sustain: 0.71,
-    release: 0.05,
+    //volume: -5;
+    attack: 0,
+    decay: 1,
+    sustain: 0.3,
+    release: 0.01,
     attackCurve: "exponential"
   }
 });
 
 var cymbal = new Tone.MetalSynth({
-  frequency: 800,
-  envelope: {
-    attack: 0.001,
-    decay: 1.4,
-    release: 0.2
-  },
-  harmonicity: 5.1,
-  modulationIndex: 32,
-  resonance: 4000,
-  octaves: 1.5
-});
+  frequency  : 200 ,
+  envelope  : {
+  attack  : 0 ,
+  decay  : 1 ,
+  release  : 0.2
+  } ,
+  harmonicity  : 1 ,
+  modulationIndex  : 5 ,
+  resonance  : 9500 ,
+  octaves  : 1.5
+  });
 
 bd.toMaster();
 cymbal.toMaster();
@@ -150,6 +151,7 @@ selectors[0].style.color = "#dce1d5";
 
 // Function that allow to switch page
 function ShowPage(n) {
+  document.querySelector("#togglebtn").textContent = "Stop";
   guest = document.getElementById("guest" + (n + 1));
   host = document.getElementById("host" + (n + 1));
   var x = document.getElementsByClassName("page");
@@ -211,6 +213,7 @@ guest.onchange = function () { //Guest value input
 
   if (guest.value < 0){
     guest.value = 1;
+    alert("We see what you are trying to do there... No negative numbers!");
   }
   tatum_calculation();
 };
@@ -229,6 +232,7 @@ host.onchange = function () { //Host value input
   }
   if (host.value < 0){
     host.value = 1;
+    alert("We see what you are trying to do there... No negative numbers!");
   }
   tatum_calculation();
 };
@@ -246,6 +250,10 @@ guest2.onchange = function () { //N1 Numerator of rhythm number 1
   if (guest.value == 0) {
     guest.value = 1;
   }
+  if (guest.value < 0){
+    guest.value = 1;
+    alert("We see what you are trying to do there... No negative numbers!");
+  }
   //tatum_calculation(); No tatum calculation but a function that calculate the 
 };
 
@@ -261,6 +269,10 @@ host2.onchange = function () { // D1 Denumerator of rhythm number 2
   if (host.value == 0) {
     host.value = 1;
   }
+  if (host.value < 0){
+    host.value = 1;
+    alert("We see what you are trying to do there... No negative numbers!");
+  }
   tatum_calculation();
 };
 
@@ -274,6 +286,10 @@ guest3.onchange = function () { //N2 Numerator of rhythm 2
   }
   if (guest.value == 0) {
     guest.value = 1;
+  }
+  if (guest.value < 0){
+    guest.value = 1;
+    alert("We see what you are trying to do there... No negative numbers!");
   }
   tatum_calculation();
 };
@@ -289,6 +305,10 @@ host3.onchange = function () {  // D2 Denominator of rhythm 2
   }
   if (host.value == 0) {
     host.value = 1;
+  }
+  if (host.value < 0){
+    host.value = 1;
+    alert("We see what you are trying to do there... No negative numbers!");
   }
   tatum_calculation();
 };
@@ -504,11 +524,11 @@ function play(time) {
   };
 
   if (beats[counter % sub]) {
-    bd.triggerAttackRelease("c2", 0.1, time);
+    cymbal.triggerAttackRelease("C2", '16n', time);
 
   };
   if (beats2[counter % sub]) {
-    cymbal.triggerAttackRelease("c2", 0.1, time);
+    bd.triggerAttackRelease("C1", '16n', time);
   };
 
   counter = counter + 1;
