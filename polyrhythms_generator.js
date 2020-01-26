@@ -2,6 +2,7 @@
 ///
 //**THINGS TO DO**//
 ///
+//FIX THE SOUNDS!!
 // FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
 // ADD SHIFTING IN COSET
 // MAKE THE COSET PLAY
@@ -11,7 +12,6 @@
 // FIX ANIMATION OF PIES
 // Fix positioning and add transition between pages, especially the first page's shadow
 // START TO DEVELOP POLYMETER SECTION
-// ACCEPT ONLY POSITIVE VALUES ON HOST AND HUEST!!
 // Sometimes pies stop to rotate
 // do a research about visualizing polyrhythm in circular fashion
 // set bpm range or set slow and fast tempo
@@ -635,7 +635,7 @@ document.getElementById("startbtn").onclick = function () {
   Tone.start();
   ShowPage(3);
   seq_guest = new Tone.Sequence(function(time, note){
-    bd.triggerAttackRelease(note, "+0.05", time);
+    cymbal.triggerAttackRelease(note, "+0.05", time);
   //modulation of duration
   }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
   seq_guest.start(0);
