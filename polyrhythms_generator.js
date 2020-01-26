@@ -85,11 +85,13 @@ cymbal.toMaster();
 //let CrossLoop = new Tone.Loop(play, "4n");
 //CrossLoop.start(0);
 
-var seq = new Tone.Sequence(function(time, note){
+var seq_host = new Tone.Sequence(function(time, note){
   bd.triggerAttackRelease(note, "+0.05", time);
 //straight quater notes
-}, ["C4", , , "A4"], "4n");
-seq.start(0);
+}, ["F3", "F2" , "F2" , "F2"], "4n");
+seq_host.start(0);
+
+var seq_guest;
 
 var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
@@ -97,6 +99,7 @@ var animation_host = new Tone.Loop(function(time){
   }, time)
 }, "4n");
  var guest_time;
+
 var animation_guest = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_guest();
@@ -605,7 +608,7 @@ function calculate_pie() {
 
 function play_guest(time) {
  
-  animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (60000) / (Tone.Transport.bpm.value) });
+  animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (60000*host_accents/Tone.Transport.bpm.value)/guest_accents });
   
   if (coset == true) {
     animate({ timing: backEaseOut, draw: drawPie_coset, duration: (60000) / (bpm) });
@@ -631,7 +634,14 @@ document.documentElement.addEventListener('mousedown', function(){
 document.getElementById("startbtn").onclick = function () {
   Tone.start();
   ShowPage(3);
+  seq_guest = new Tone.Sequence(function(time, note){
+    bd.triggerAttackRelease(note, "+0.05", time);
+  //modulation of duration
+  }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+  seq_guest.start(0);
   calculate_pie();
+  
+  animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value)/guest_accents + "s";
   Tone.Transport.start("+0.1");
 
   end = performance.now();
