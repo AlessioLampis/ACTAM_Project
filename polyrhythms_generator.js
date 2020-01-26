@@ -365,7 +365,7 @@ function drawCircle() {
 
 //ANIMATION: PIES OF CROSS RHYTHM
 
-function animate({ timing, draw, duration }) { //animate function of DrawPie
+function animate_guest({ timing, draw, duration }) { //animate function of DrawPie
 
   let start = performance.now();
 
@@ -387,10 +387,37 @@ function animate({ timing, draw, duration }) { //animate function of DrawPie
       requestAnimationFrame(animate);
     }
   });
-  theta += alpha/N
-  theta = theta % (2 * Math.PI);
+  theta_guest += alpha_guest/N;
+  theta_guest = theta_guest % (2 * Math.PI);
 
-}
+};
+
+function animate_host({ timing, draw, duration }) { //animate function of DrawPie
+
+  let start = performance.now();
+
+  requestAnimationFrame(function animate(time) {
+    // timeFraction goes from 0 to 1
+    let timeFraction = (time - start) / duration;
+    if (timeFraction > 1) {
+      timeFraction = 1;
+      /*theta += alpha;
+      theta = theta%(2*Math.PI);*/
+    }
+
+    // calculate the current animation state
+    let progress = timing(timeFraction);
+
+    draw(progress); // draw it
+
+    if (timeFraction < 1) {
+      requestAnimationFrame(animate);
+    }
+  });
+  theta_host += alpha_host/N
+  theta_host = theta_host % (2 * Math.PI);
+
+};
 
 //DRAW GUEST AND HOST IN CROSS RHYTHM
 
@@ -552,7 +579,7 @@ function calculate_pie() {
     x % coset_accents == 0 ? coset_beat.push(true) : coset_beat.push(false);
   };
 
-  for(var y = 0; x < guest_accents; y++) {
+  for(var y = 0; y < guest_accents; y++) {
     free_guest_beats.push(true);
   };
 
