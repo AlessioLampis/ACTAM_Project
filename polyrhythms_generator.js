@@ -415,6 +415,7 @@ function drawPie_host(progress) {  //HOST PIE
     ctx2.beginPath();
     ctx2.lineWidth = "1.5";
     ctx2.strokeStyle = "#dce1d5";
+    ctx2.moveTo(x1, y1);
     //ctx2.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
     var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + j * alpha + progress * alpha + theta;
     ctx2.arc(x1, y1, rad2, gamma, gamma + alpha);
