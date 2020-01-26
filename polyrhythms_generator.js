@@ -96,12 +96,13 @@ var animation_host = new Tone.Loop(function(time){
     play_host();
   }, time)
 }, "4n");
-
+ var guest_time;
 var animation_guest = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_guest();
   }, time)
 }, "4n");
+animation_guest.interval = "1";
 
 animation_host.start(0);
 animation_guest.start(0);
@@ -603,7 +604,7 @@ function calculate_pie() {
 //PLAY FUNCTION
 
 function play_guest(time) {
-
+ 
   animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (60000) / (Tone.Transport.bpm.value) });
   
   if (coset == true) {
