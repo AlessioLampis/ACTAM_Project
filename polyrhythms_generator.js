@@ -14,7 +14,8 @@
 // ACCEPT ONLY POSITIVE VALUES ON HOST AND HUEST!!
 // Sometimes pies stop to rotate
 // do a research about visualizing polyrhythm in circular fashion
-// ciao mario!!
+// set bpm range or set slow and fast tempo
+// examples with music sheets
 
 ///
 //**MODEL**//
@@ -24,17 +25,17 @@
 //  Timing variables 
 let start = 0;
 let end = 0;
-var counter = 0;
-const tm = document.querySelector("#bpm")
+var counter = 0; //Maybe we should add another one
+const tm = document.querySelector("#bpm") 
 var bpm = Math.floor(tm.value);
 
 
 //Tatum for every page (right now, we use only tatum1 for cross ryhthm)
-var tatum = { tatum1: 1, tatum2: 1, tatum3: 1 };
+var tatum = { tatum1: 1, tatum2: 1, tatum3: 1 }; //LCM of each page
 
 //NAVIGATE THROUGHT PAGE variables
-var CurrentPage = 0;
-var selectors = document.querySelectorAll("button");
+var CurrentPage = 0; //page where you are 
+var selectors = document.querySelectorAll("button"); //
 
 //PAGE NUMBER 0 variable
 let Btn = document.getElementsByClassName("firstbtn");
@@ -94,7 +95,7 @@ var animation = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play();
   }, time)
-}, "4n");
+}, "8n");
 animation.start(0)
 
 //Pop's circle animation (not used yet)
@@ -111,7 +112,7 @@ var requestAnimationFrame =
 
 //Animation of cross rhythm pies
 
-var theta = 0;
+//CANVAS VARIABLES
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 const canvas2 = document.getElementById('myCanvas2');
@@ -127,17 +128,23 @@ var y2 = canvas3.height / 2;
 var rad = 100;
 var rad2 = 100;
 var rad3 = 100;
-var sub = 6;
-var accents = 3;
-var accents2 = 2;
-var alpha = 2 * Math.PI / sub;
-var beats = [];
-var beats2 = [];
-var coset = false;
-var N = 2;
-var beatsCos = [];
-var cosaccents = accents2;
+
+
+var sub = 6; //number of tatum
+var guest_accents = 3; // guest value
+var host_accents = 2; // host value
+var alpha = 2 * Math.PI / sub; //angle of tatum reperesentation
+var guest_beats = []; // guest array for tatum representation
+var host_beats = []; //host array for tatum representation
+var free_guest_beats = [];
+var free_host_beats = [];
+var free_coset_beats = [];
+var coset = false; //whether the coset is on or off
+var N = 2; //number used for animate with or without  coset
+var coset_beat = []; // coset array used in tatum representaion
+var coset_accents = guest_accents; // coset accents
 var s = 1; //switch of the coset
+var theta = 0; 
 
 /////
 //**FUNCTIONS**//
@@ -221,6 +228,7 @@ guest.onchange = function () { //Guest value input
   }
 
   if (guest.value < 0){
+    alert("Guest value must be positive");
     guest.value = 1;
   }
   tatum_calculation();
@@ -239,6 +247,7 @@ host.onchange = function () { //Host value input
     host.value = 1;
   }
   if (host.value < 0){
+    alert("Host value must be positive");
     host.value = 1;
   }
   tatum_calculation();
@@ -272,7 +281,7 @@ host2.onchange = function () { // D1 Denumerator of rhythm number 2
   if (host.value == 0) {
     host.value = 1;
   }
-  tatum_calculation();
+  //tatum_calculation();
 };
 
 guest3.onchange = function () { //N2 Numerator of rhythm 2
@@ -286,7 +295,7 @@ guest3.onchange = function () { //N2 Numerator of rhythm 2
   if (guest.value == 0) {
     guest.value = 1;
   }
-  tatum_calculation();
+  //tatum_calculation();
 };
 
 host3.onchange = function () {  // D2 Denominator of rhythm 2
@@ -301,7 +310,7 @@ host3.onchange = function () {  // D2 Denominator of rhythm 2
   if (host.value == 0) {
     host.value = 1;
   }
-  tatum_calculation();
+  //tatum_calculation();
 };
 
 
@@ -356,7 +365,7 @@ function drawCircle() {
 
 //ANIMATION: PIES OF CROSS RHYTHM
 
-function animate({ timing, draw, duration }) { //animate function
+function animate({ timing, draw, duration }) { //animate function of DrawPie
 
   let start = performance.now();
 
@@ -378,14 +387,15 @@ function animate({ timing, draw, duration }) { //animate function
       requestAnimationFrame(animate);
     }
   });
-  theta += alpha / N; //N is 2 when coset is disabled, 3 when is enabled
+  theta += alpha/N
   theta = theta % (2 * Math.PI);
+
 }
 
 //DRAW GUEST AND HOST IN CROSS RHYTHM
 
-function drawPie(progress) {  //GUEST PIE
-  beats.forEach((beat, i) => {
+function drawPie_guest(progress) {  //GUEST PIE
+  guest_beats.forEach((beat, i) => {
     ctx.beginPath();
     ctx.lineWidth = "1.5";
     ctx.strokeStyle = "#dce1d5";
@@ -400,8 +410,40 @@ function drawPie(progress) {  //GUEST PIE
   });
 };
 
-function drawPie2(progress) {  //HOST PIE
-  beats2.forEach((beat, j) => {
+function drawPie_host(progress) {  //HOST PIE
+  host_beats.forEach((beat, j) => {
+    ctx2.beginPath();
+    ctx2.lineWidth = "1.5";
+    ctx2.strokeStyle = "#dce1d5";
+    //ctx2.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
+    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + j * alpha + progress * alpha + theta;
+    ctx2.arc(x1, y1, rad2, gamma, gamma + alpha);
+    ctx2.lineTo(x1, y1);
+    ctx2.fillStyle = j == 0 ? "yellow" : beat ? "red" : "black";
+    ctx2.fill();
+    ctx2.stroke();
+  });
+}
+
+
+function drawPie_free_guest(progress) {  //GUEST PIE
+  free_guest_beats.forEach((beat, i) => {
+    ctx.beginPath();
+    ctx.lineWidth = "1.5";
+    ctx.strokeStyle = "#dce1d5";
+    ctx.moveTo(x0, y0);
+    //ctx.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
+    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + i * alpha + progress * alpha + theta;
+    ctx.arc(x0, y0, rad, gamma, gamma + alpha);
+    ctx.lineTo(x0, y0);
+    ctx.fillStyle = i == 0 ? "yellow" : beat ? "red" : "black";
+    ctx.fill();
+    ctx.stroke();
+  });
+};
+
+function drawPie_free_host(progress) {  //HOST PIE
+  free_host_beats.forEach((beat, j) => {
     ctx2.beginPath();
     ctx2.lineWidth = "1.5";
     ctx2.strokeStyle = "#dce1d5";
@@ -430,9 +472,9 @@ function check_coset() {  //Change the N in animate function
 
 
 
-function drawCoset(progress) {
+function drawPie_coset(progress) {
   
-  beatsCos.forEach((beat, j) => {
+  coset_beat.forEach((beat, j) => {
     ctx3.beginPath();
     ctx3.lineWidth = "1.5";
     ctx3.strokeStyle = "#dce1d5";
@@ -482,37 +524,50 @@ var linEaseOut = makeEaseOut(linear);
 
 function calculate_pie() {
   sub = tatum["tatum1"];
-  accents = Math.floor(guest1.value);
-  accents2 = Math.floor(host1.value);
+  guest_accents = Math.floor(guest1.value); 
+  host_accents = Math.floor(host1.value);
+  coset_accents = guest_accents;
   alpha = 2 * Math.PI / sub;
-  //Tone.Transport.bpm.value = bpm * Math.floor(host1.value);
-  beats = [];
-  beats2 = [];
-
-  cosaccents = accents2;
-
+  Tone.Transport.bpm.value = bpm;
+  //array with tatum
+  guest_beats = []; 
+  host_beats = [];
+  coset_beat = [];
+  //array with no tatum
+  free_guest_beats = [];
+  free_host_beats = [];
+  free_coset_beats = [];
+  
+ // create the array for the tatum_representation (with subdivision)
   for (var i = 0; i < sub; i++) {
-    i % accents == 0 ? beats.push(true) : beats.push(false);
+    i % guest_accents == 0 ? guest_beats.push(true) : guest_beats.push(false);
   };
 
   for (var j = 0; j < sub; j++) {
-    j % accents2 == 0 ? beats2.push(true) : beats2.push(false);
+    j % host_accents == 0 ? host_beats.push(true) : host_beats.push(false);
   };
 
   for (var x = 0; x < sub; x++) {
-    x % cosaccents == 0 ? beatsCos.push(true) : beatsCos.push(false);
+    x % coset_accents == 0 ? coset_beat.push(true) : coset_beat.push(false);
   };
 
+  for(var y = 0; x < guest_accents; y++) {
+    free_guest_beats.push(true);
+  };
+
+  for(var z = 0; z < guest_accents; z++) {
+    free_host_beats.push(true);
+  };
 };
 
 //PLAY FUNCTION
 
 function play(time) {
 
-  animate({ timing: backEaseOut, draw: drawPie, duration: (60000) / (Tone.Transport.bpm.value) });
-  animate({ timing: backEaseOut, draw: drawPie2, duration: (60000) / (Tone.Transport.bpm.value) });
+  animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (60000) / (Tone.Transport.bpm.value) });
+  animate_host({ timing: backEaseOut, draw: drawPie_host, duration: (60000) / (Tone.Transport.bpm.value) });
   if (coset == true) {
-    animate({ timing: backEaseOut, draw: drawCoset, duration: (60000) / (bpm) });
+    animate({ timing: backEaseOut, draw: drawPie_coset, duration: (60000) / (bpm) });
   };
 };
 
@@ -530,7 +585,6 @@ document.documentElement.addEventListener('mousedown', function(){
 
 document.getElementById("startbtn").onclick = function () {
   Tone.start();
-  Tone.Transport.bpm.value = bpm * (sub/ Math.floor(host1.value));
   ShowPage(3);
   calculate_pie();
   Tone.Transport.start("+0.1");
@@ -547,6 +601,7 @@ document.getElementById("togglebtn").onclick = function () {
     document.querySelector("#togglebtn").textContent = "Stop"
   }
   Tone.Transport.toggle();
+  bd.triggerRelease();
 };
 
 document.getElementById("backbtn").onclick = function () {
@@ -566,7 +621,7 @@ document.getElementById("coset_toggle").onclick = function () {
  //CHANGE OF BPM
 tm.onchange = function () {
   bpm = Math.floor(tm.value);
-  Tone.Transport.bpm.value = bpm * (sub/ Math.floor(host1.value));
+  Tone.Transport.bpm.value = bpm;
 };
 
 
