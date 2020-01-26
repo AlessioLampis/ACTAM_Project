@@ -91,12 +91,20 @@ var seq = new Tone.Sequence(function(time, note){
 }, ["C4", , , "A4"], "4n");
 seq.start(0);
 
-var animation = new Tone.Loop(function(time){
+var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
-    play();
+    play_host();
   }, time)
-}, "8n");
-animation.start(0)
+}, "4n");
+
+var animation_guest = new Tone.Loop(function(time){
+  Tone.Draw.schedule(function(){
+    play_guest();
+  }, time)
+}, "4n");
+
+animation_host.start(0);
+animation_guest.start(0);
 
 //Pop's circle animation (not used yet)
 const container = document.getElementById("guest_circle_on_screen");
@@ -594,14 +602,18 @@ function calculate_pie() {
 
 //PLAY FUNCTION
 
-function play(time) {
+function play_guest(time) {
 
   animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (60000) / (Tone.Transport.bpm.value) });
-  animate_host({ timing: backEaseOut, draw: drawPie_host, duration: (60000) / (Tone.Transport.bpm.value) });
+  
   if (coset == true) {
     animate({ timing: backEaseOut, draw: drawPie_coset, duration: (60000) / (bpm) });
   };
 };
+
+function play_host(time) {
+  animate_host({ timing: backEaseOut, draw: drawPie_host, duration: (60000) / (Tone.Transport.bpm.value) });
+}
 
 
 
