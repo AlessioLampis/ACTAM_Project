@@ -98,7 +98,7 @@ seq_guest = new Tone.Sequence(function(time, note){
 seq_host = new Tone.Sequence(function(time, note){
   bd.triggerAttackRelease(note, "8n", time);
 //straight quater notes
-}, ["F3", "F2" , "F2" , "F2"], Tone.Time("4n").toSeconds());
+}, ["F4", "F4" , "F4" , "F4"], Tone.Time("4n").toSeconds());
 
 var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
@@ -642,17 +642,17 @@ document.getElementById("startbtn").onclick = function () {
   ShowPage(3);
   calculate_pie();
   seq_guest = new Tone.Sequence(function(time, note){
-    cymbal.triggerAttackRelease(note, "8n", time);
+    bd.triggerAttackRelease(note, "8n", time);
   //modulation of duration
   }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
   
   seq_host.start(); //no delay in 
   seq_guest.start();
 
-  animation_host.start();
-  animation_guest.start();
+  //animation_host.start();
+  //animation_guest.start();
   
-  animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+ // animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
   Tone.Transport.start();
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
@@ -661,23 +661,23 @@ document.getElementById("startbtn").onclick = function () {
 document.getElementById("togglebtn").onclick = function () {
   if (document.querySelector("#togglebtn").textContent == "Stop") {
     document.querySelector("#togglebtn").textContent = "Start";
-    seq_host.stop();//no delay
+
+    seq_host.stop();
     seq_guest.stop();
   
-    animation_host.stop();
-    animation_guest.stop();  
-  
+    //animation_host.stop();
+    //animation_guest.stop();  
   }
   else {
     
   document.querySelector("#togglebtn").textContent = "Stop"
-    seq_host.start();//no delay
+    seq_host.start();
     seq_guest.start();
   
-    animation_host.start();
-    animation_guest.start();
-    
+    //animation_host.start();
+    //animation_guest.start();
 
+    
     
   }
  
@@ -692,9 +692,10 @@ if (document.querySelector("#togglebtn").textContent == "Stop") {
 
   seq_host.stop();//no delay
   seq_guest.stop();
-  animation_host.stop();
-  animation_guest.stop(); 
+  //animation_host.stop();
+  //animation_guest.stop(); 
   seq_guest.delete();
+  Tone.Transport.stop()
 }
 else{
   ShowPage(0);
