@@ -3,17 +3,16 @@
 //**THINGS TO DO**//
 ///
 //FIX THE SOUNDS!!
-// FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
-// ADD SHIFTING IN COSET
-// MAKE THE COSET PLAY
-// stop the coset when changes are appied on it
-// CHANGE THE SOUNDS 
-// ADD ANOTHER SET OF SOUNDS
+// 1 FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
+// 2 ADD SHIFTING IN COSET
+// 3 MAKE THE COSET PLAY
+// 4 stop the coset when changes are appied on it
+// 5 CHANGE THE SOUNDS 
+// 6 ADD ANOTHER SET OF SOUNDS
 // FIX ANIMATION OF PIES
-// Fix positioning and add transition between pages, especially the first page's shadow
-// START TO DEVELOP POLYMETER SECTION
+// 7 Fix positioning and add transition between pages, especially the first page's shadow
+// 8 START TO DEVELOP POLYMETER SECTION
 // Sometimes pies stop to rotate
-// do a research about visualizing polyrhythm in circular fashion
 // set bpm range or set slow and fast tempo
 // examples with music sheets
 
