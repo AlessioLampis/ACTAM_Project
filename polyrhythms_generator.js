@@ -716,6 +716,3 @@ tm.onchange = function () {
   bpm = Math.floor(tm.value);
   Tone.Transport.bpm.value = bpm;
 };
-
-
-
