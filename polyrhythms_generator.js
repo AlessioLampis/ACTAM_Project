@@ -88,16 +88,28 @@ var seq_host;
 
 var seq_guest;
 
+var seq_guest_timing;
+
+seq_guest = new Tone.Sequence(function(time, note){
+  cymbal.triggerAttackRelease(note, "8n", time);
+//modulation of duration
+}, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+
+seq_host = new Tone.Sequence(function(time, note){
+  bd.triggerAttackRelease(note, "8n", time);
+//straight quater notes
+}, ["F3", "F2" , "F2" , "F2"], Tone.Time("4n").toSeconds());
+
 var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_host();
-  }, time + 0.01)
+  }, time)
 }, "4n");
 
 var animation_guest = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_guest();
-  }, time + 0.02)
+  }, time)
 }, "4n");
 
 
@@ -625,29 +637,23 @@ document.documentElement.addEventListener('mousedown', function(){
 });
 
 document.getElementById("startbtn").onclick = function () {
-  time = Tone.now();
+  
   Tone.start();
   ShowPage(3);
   calculate_pie();
-
   seq_guest = new Tone.Sequence(function(time, note){
-    cymbal.triggerAttackRelease(note, "8n", time + 0.05);
+    cymbal.triggerAttackRelease(note, "8n", time);
   //modulation of duration
   }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
-
-  seq_host = new Tone.Sequence(function(time, note){
-    bd.triggerAttackRelease(note, "8n", time);
-  //straight quater notes
-  }, ["F3", "F2" , "F2" , "F2"], Tone.Time("4n").toSeconds());
   
-  seq_host.start("+0.05"); //no delay in 
-  seq_guest.start("+0.07");
+  seq_host.start(); //no delay in 
+  seq_guest.start();
 
-  animation_host.start("+0.09");
-  animation_guest.start("+0.13");
+  animation_host.start();
+  animation_guest.start();
   
   animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
-  Tone.Transport.start("+0.5");
+  Tone.Transport.start();
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
 };
@@ -655,46 +661,45 @@ document.getElementById("startbtn").onclick = function () {
 document.getElementById("togglebtn").onclick = function () {
   if (document.querySelector("#togglebtn").textContent == "Stop") {
     document.querySelector("#togglebtn").textContent = "Start";
-    Tone.Transport.stop();
+    seq_host.stop();//no delay
+    seq_guest.stop();
+  
+    animation_host.stop();
+    animation_guest.stop();  
+  
   }
   else {
     
-    Tone.Transport.start("+0.02");
-    seq_guest = new Tone.Sequence(function(time, note){
-      cymbal.triggerAttackRelease(note, "8n", time +0.05);
-    //modulation of duration
-    }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+  document.querySelector("#togglebtn").textContent = "Stop"
+    seq_host.start();//no delay
+    seq_guest.start();
   
-    seq_host.start("+0.05");//no delay
-    seq_guest.start("+0.07");
-  
-    animation_host.start("+0.09");
-    animation_guest.start("+0.13");
+    animation_host.start();
+    animation_guest.start();
     
+
     
-    animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";;
-    document.querySelector("#togglebtn").textContent = "Stop"
   }
  
-  seq_guest.cancel();
-  bd.triggerRelease("+0.05");
-  cymbal.triggerRelease("+0.07");
-  seq_host.stop("+0.09");
-  animation_host.stop("+0.12");
-  animation_guest.stop("+0.13");
+
   
   
 };
 
 document.getElementById("backbtn").onclick = function () {
-  Tone.Transport.stop();
+if (document.querySelector("#togglebtn").textContent == "Stop") {
   ShowPage(0);
-  seq_guest.cancel();
-  bd.triggerRelease("+0.05");
-  cymbal.triggerRelease("+0.07");
-  seq_host.stop("+0.09");
-  animation_host.stop("+0.12");
-  animation_guest.stop("+0.13");
+
+  seq_host.stop();//no delay
+  seq_guest.stop();
+  animation_host.stop();
+  animation_guest.stop(); 
+  seq_guest.delete();
+}
+else{
+  ShowPage(0);
+}
+   
 }
 
 document.getElementById("coset_toggle").onclick = function () {
