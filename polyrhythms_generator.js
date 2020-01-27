@@ -84,24 +84,20 @@ cymbal.toMaster();
 //let CrossLoop = new Tone.Loop(play, "4n");
 //CrossLoop.start(0);
 
-var seq_host = new Tone.Sequence(function(time, note){
-  bd.triggerAttackRelease(note, "+0.05", time);
-//straight quater notes
-}, ["F3", "F2" , "F2" , "F2"], "4n");
-
+var seq_host;
 
 var seq_guest;
 
 var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_host();
-  }, time)
+  }, time + 0.01)
 }, "4n");
 
 var animation_guest = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_guest();
-  }, time)
+  }, time + 0.02)
 }, "4n");
 
 
@@ -178,6 +174,7 @@ selectors[0].style.color = "#dce1d5";
 
 // Function that allow to switch page
 function ShowPage(n) {
+  document.querySelector("#togglebtn").textContent = "Stop";
   guest = document.getElementById("guest" + (n + 1));
   host = document.getElementById("host" + (n + 1));
   var x = document.getElementsByClassName("page");
@@ -604,10 +601,10 @@ function calculate_pie() {
 
 function play_guest(time) {
  
-  animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (30000*host_accents/Tone.Transport.bpm.value)/guest_accents });
+  animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (30007*host_accents/Tone.Transport.bpm.value)/guest_accents });
   
   if (coset == true) {
-    animate({ timing: backEaseOut, draw: drawPie_coset, duration: (30000) / (Tone.Transport.bpm.value) });
+    animate({ timing: backEaseOut, draw: drawPie_coset, duration: (30005) / (Tone.Transport.bpm.value) });
   };
 };
 
@@ -628,47 +625,69 @@ document.documentElement.addEventListener('mousedown', function(){
 });
 
 document.getElementById("startbtn").onclick = function () {
+  time = Tone.now();
   Tone.start();
   ShowPage(3);
   calculate_pie();
 
   seq_guest = new Tone.Sequence(function(time, note){
-    cymbal.triggerAttackRelease(note, "+0.05", time);
+    cymbal.triggerAttackRelease(note, "8n", time + 0.05);
   //modulation of duration
   }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
-  seq_host.start("+0.1");
-  seq_guest.start("+0.11");
+  seq_host = new Tone.Sequence(function(time, note){
+    bd.triggerAttackRelease(note, "8n", time);
+  //straight quater notes
+  }, ["F3", "F2" , "F2" , "F2"], Tone.Time("4n").toSeconds());
+  
+  seq_host.start("+0.05"); //no delay in 
+  seq_guest.start("+0.07");
 
-  animation_host.start("+0.12");
+  animation_host.start("+0.09");
   animation_guest.start("+0.13");
   
-  Tone.Transport.start("+0.5");
   animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
-
-
+  Tone.Transport.start("+0.5");
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
 };
 
 document.getElementById("togglebtn").onclick = function () {
   if (document.querySelector("#togglebtn").textContent == "Stop") {
-    document.querySelector("#togglebtn").textContent = "Start"
+    document.querySelector("#togglebtn").textContent = "Start";
+    Tone.Transport.stop();
   }
   else {
+    
+    Tone.Transport.start("+0.02");
+    seq_guest = new Tone.Sequence(function(time, note){
+      cymbal.triggerAttackRelease(note, "8n", time +0.05);
+    //modulation of duration
+    }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+  
+    seq_host.start("+0.05");//no delay
+    seq_guest.start("+0.07");
+  
+    animation_host.start("+0.09");
+    animation_guest.start("+0.13");
+    
+    
+    animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";;
     document.querySelector("#togglebtn").textContent = "Stop"
   }
+ 
   seq_guest.cancel();
   bd.triggerRelease("+0.05");
   cymbal.triggerRelease("+0.07");
   seq_host.stop("+0.09");
   animation_host.stop("+0.12");
   animation_guest.stop("+0.13");
-  Tone.Transport.toggle("+0.2");
+  
   
 };
 
 document.getElementById("backbtn").onclick = function () {
+  Tone.Transport.stop();
   ShowPage(0);
   seq_guest.cancel();
   bd.triggerRelease("+0.05");
@@ -676,7 +695,6 @@ document.getElementById("backbtn").onclick = function () {
   seq_host.stop("+0.09");
   animation_host.stop("+0.12");
   animation_guest.stop("+0.13");
-  Tone.Transport.stop("+0.2");
 }
 
 document.getElementById("coset_toggle").onclick = function () {
