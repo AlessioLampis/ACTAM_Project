@@ -7,15 +7,15 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  margin: 0 auto;
+  margin: auto;
 }
 /*BACKGROUND*/
 .cube {
   position: absolute;
-  top: 80vh;
-  left: 80vw;
-  width: 70px;
-  height: 70px;
+  top: 2%;
+  left: 5%;
+  width: 5%;
+  height: 5%;
   z-index: -1;
   border-radius: 10%;
   border: solid 0px #003298;
@@ -32,42 +32,42 @@ body {
 .cube:nth-child(2) {
   -webkit-animation-delay: 47s;
   animation-delay: 47s;
-  width: 40px;
-  height: 40px;
-  left: 25vw;
-  top: 40vh;
+  width: 5%;
+  height: 5%;
+  left: 20%;
+  top: 40%;
 }
 .cube:nth-child(3) {
   -webkit-animation-delay: 65s;
   animation-delay: 65s;
-  width: 30px;
-  height: 30px;
-  left: 75vw;
-  top: 20vh;
+  width: 5%;
+  height: 5%;
+  left: 75%;
+  top: 20%;
 }
 .cube:nth-child(4) {
   -webkit-animation-delay: 90s;
   animation-delay: 90s;
-  width: 15px;
-  height: 15px;
-  left: 90vw;
-  top: 35vh;
+  width: 5%;
+  height: 5%;
+  left: 90%;
+  top: 35%;
 }
 .cube:nth-child(5) {
-  -webkit-animation-delay: 4s;
-  animation-delay: 4s;
-  width: 50px;
-  height: 50px;
-  left: 10vw;
-  top: 85vh;
-}
-.cube:nth-child(6) {
   -webkit-animation-delay: 45s;
   animation-delay: 45s;
-  width: 20px;
-  height: 20px;
-  left: 40vw;
-  top: 5vh;
+  width: 5%;
+  height: 5%;
+  left: 10%;
+  top: 82%;
+}
+.cube:nth-child(6) {
+  -webkit-animation-delay: 4s;
+  animation-delay: 4s;
+  width: 2%;
+  height: 2%;
+  left: 40%;
+  top: 2%;
 }
 
 @-webkit-keyframes cube {
@@ -113,10 +113,7 @@ svg path {
 
 /*OVERALL LAYOUT OF PAGES*/
 #pages {
-  position: relative;
-  text-align: center;
-  padding-top: 0px;
-  top: 60px;
+  z-index: 1;
 }
 
 .page {
@@ -128,11 +125,34 @@ svg path {
   font-family: "Source Code Pro", monospace;
   font-size: 14px;
   text-align: center;
+  margin-top : 10%;
 }
 .page:after {
   position: absolute;
   content: "";
-  top: 5vw;
+  top: 10%;
+  left: -10%;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  -webkit-transform: scale(0.75);
+  transform: scale(0.75);
+  -webkit-filter: blur(5vw);
+  -moz-filter: blur(5vw);
+  -ms-filter: blur(5vw);
+  filter: blur(5vw);
+  background: linear-gradient(270deg, #046f8c, #046f8c);
+  background-size: 100% 100%;
+  -webkit-animation: animateGlow 10s 2s ease infinite, fadeIn 0.5s 2s ease-in;
+  animation: animateGlow 10s 2s ease infinite, fadeIn 0.5s 2s ease-in;
+  animation-delay:2s;
+}
+
+.page-background:after {
+  position: absolute;
+  content: "";
+  top: 10%;
   left: 0;
   right: 0;
   z-index: -1;
@@ -147,31 +167,13 @@ svg path {
   filter: blur(5vw);
   background: linear-gradient(270deg, #046f8c, #046f8c);
   background-size: 200% 200%;
-  -webkit-animation: animateGlow 10s ease infinite, fadeIn 0.5s ease-in;
-  animation: animateGlow 10s ease infinite, fadeIn 0.5s ease-in;
+  -webkit-animation: animateGlow 10s 2s ease infinite, fadeIn 0.5s 2s ease-in;
+  animation: animateGlow 10s 2s ease infinite, fadeIn 2s ease-in;
+  animation-delay: 2s;
+
 }
-@-webkit-keyframes animateGlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-@keyframes animateGlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+
+
 .page h1 {
   font-size: 3.5em;
   font-weight: 500;
@@ -214,21 +216,19 @@ svg path {
 
 /*FIRST PAGE*/
 .firstpage {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  margin-top: 30%;
+
 }
 
 .firstlogo {
+  position: relative;
   display: block;
-  margin-left: 50%;
-  margin-right: 50%;
-  margin-top: 10%;
-  font-family: neue-haas-grotesk-display, "Helvetica Neue", Helvetica, sans-serif;
+  font-family:  "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 600;
   font-style: normal;
   font-size: 100px;
+  text-align: center;
   letter-spacing: 1.5px;
   color: #dce1d5;
   line-height: 1;
@@ -246,8 +246,8 @@ svg path {
   height: 50px;
   float: center;
   display: block;
-  margin-left: 30%;
-  margin-right: 30%;
+  margin-left: 10%;
+  margin-right: 10%;
   text-align: center;
   line-height: 1.5;
   -webkit-animation: sub 7s linear normal 1;
@@ -257,15 +257,16 @@ svg path {
 .firstbtn {
   position: relative;
   z-index: 1;
-  
+  text-align: center;
   color: #fff;
   cursor: pointer;
-  font-family: neue-haas-grotesk-display, "Helvetica Neue", Helvetica, sans-serif;
+  font-family:  "Helvetica Neue", Helvetica, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 45px;
-  margin-top: 10%;
+  margin-top: 8%;
   margin-bottom :20%;
+  margin-left: 35%;
   max-width: 160px;
   text-decoration: none;
   text-transform: none;
@@ -337,8 +338,8 @@ margin-left:45%;
   text-decoration: none;
   transition: all 250ms linear; 
 }
-.coset{
-  position: absolute;
+.coset{ 
+  position: relative; /* change all the element on this line with the justify-content: space-around*/
   display: inline-block;
   width: 60px;
   height: 20px;
@@ -354,17 +355,27 @@ margin-left:45%;
 .inputcontainer{
   position: relative;
   display: inline-block;
+ 
 }
+
 
 .bpmpage1{
   position: relative;
   left: -300px;
 }
 
+.bpmpage1 input {
+  font-family: "Source Code Pro", monospace;
+}
+
 #coset_switch{
   position: relative;
   margin-left: 300px;
   bottom: 20px;
+}
+
+#coset_switch input {
+  font-family: "Source Code Pro", monospace;
 }
 
 .slider {
@@ -405,7 +416,20 @@ input:checked + .slider:before {
   transform: translateX(30px);
 }
 
-
+.logo {
+  display: block;
+  margin-left: 50%;
+  margin-right: 50%;
+  float: center;
+  margin: 0;
+  font-family: neue-haas-grotesk-display, "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 40px;
+  letter-spacing: 0.6px;
+  color: #dce1d5;
+  line-height: 3;
+}
 
 #togglebtn{
   position: relative;
@@ -527,46 +551,25 @@ input:checked + .slider:before {
     opacity: 1;
   }
 }
-.logo {
-  display: block;
-  margin-left: 50%;
-  margin-right: 50%;
-  float: center;
-  margin: 0;
-  font-family: neue-haas-grotesk-display, "Helvetica Neue", Helvetica, sans-serif;
-  font-weight: 600;
-  font-style: normal;
-  font-size: 40px;
-  letter-spacing: 0.6px;
-  color: #dce1d5;
-  line-height: 3;
-}
+
 
 canvas {
   background: none;
   display: inline-block;
 }
 
-.page-background:after {
-  position: absolute;
-  content: "";
-  top: 5vw;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
-  -webkit-transform: scale(0.75);
-  transform: scale(0.75);
-  -webkit-filter: blur(5vw);
-  -moz-filter: blur(5vw);
-  -ms-filter: blur(5vw);
-  filter: blur(5vw);
-  background: linear-gradient(270deg, #046f8c, #046f8c);
-  background-size: 200% 200%;
-  -webkit-animation: animateGlow 10s ease infinite, fadeIn 0.5s ease-in;
-  animation: animateGlow 10s ease infinite, fadeIn 0.5s ease-in;
+
+
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @keyframes animateGlow {
   0% {
@@ -579,6 +582,7 @@ canvas {
     background-position: 0% 50%;
   }
 }
+
 .animate-in {
   -webkit-animation: fadeIn 0.5s ease-in;
   animation: fadeIn 0.5s ease-in;
