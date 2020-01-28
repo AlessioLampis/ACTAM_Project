@@ -2,6 +2,7 @@
 ///
 //**THINGS TO DO**//
 ///
+<<<<<<< Updated upstream
 //FIX THE SOUNDS!!
 // 1 FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
 // 2 ADD SHIFTING IN COSET
@@ -9,6 +10,15 @@
 // 4 stop the coset when changes are appied on it
 // 5 CHANGE THE SOUNDS 
 // 6 ADD ANOTHER SET OF SOUNDS
+=======
+// try to use Tone.sequencer insted of loop
+// FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
+// ADD SHIFTING IN COSET
+// MAKE THE COSET PLAY
+// stop the coset when changes are appied on it
+// CHANGE THE SOUNDS 
+// ADD ANOTHER SET OF SOUNDS
+>>>>>>> Stashed changes
 // FIX ANIMATION OF PIES
 // 7 Fix positioning and add transition between pages, especially the first page's shadow
 // 8 START TO DEVELOP POLYMETER SECTION
@@ -100,6 +110,11 @@ var animation_guest = new Tone.Loop(function(time){
   }, time + 0.02)
 }, "4n");
 
+
+
+let event = new Tone.Event( function(time,note ){ // Event is not a constructor? DAFFUCCCk
+  triggerAttackRelease(note, "4n")},
+["C4" , "G4", "F4"]);
 
 
 //Pop's circle animation (not used yet)
