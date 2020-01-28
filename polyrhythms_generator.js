@@ -2,6 +2,7 @@
 ///
 //**THINGS TO DO**//
 ///
+
 //FIX THE SOUNDS!!
 // 1 FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
 // 2 ADD SHIFTING IN COSET
@@ -9,6 +10,7 @@
 // 4 stop the coset when changes are appied on it
 // 5 CHANGE THE SOUNDS 
 // 6 ADD ANOTHER SET OF SOUNDS
+
 // FIX ANIMATION OF PIES
 // 7 Fix positioning and add transition between pages, especially the first page's shadow
 // 8 START TO DEVELOP POLYMETER SECTION
