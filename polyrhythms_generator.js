@@ -659,11 +659,15 @@ document.documentElement.addEventListener('mousedown', function(){
 });
 
 document.getElementById("startbtn").onclick = function () {
+<<<<<<< HEAD
   
+=======
+>>>>>>> parent of abc7d99... PORCOILDIOOOOOO
   Tone.start();
   ShowPage(3);
   calculate_pie();
   seq_guest = new Tone.Sequence(function(time, note){
+<<<<<<< HEAD
     xd.triggerAttackRelease(note, "8n", time);
   //modulation of duration
   }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
@@ -676,12 +680,29 @@ document.getElementById("startbtn").onclick = function () {
   
  // animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
   Tone.Transport.start();
+=======
+    cymbal.triggerAttackRelease(note, "+0.05", time);
+  //modulation of duration
+  }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+
+  seq_host.start("+0.1");
+  seq_guest.start("+0.11");
+
+  animation_host.start("+0.12");
+  animation_guest.start("+0.13");
+  
+  Tone.Transport.start("+0.5");
+  animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+
+
+>>>>>>> parent of abc7d99... PORCOILDIOOOOOO
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
 };
 
 document.getElementById("togglebtn").onclick = function () {
   if (document.querySelector("#togglebtn").textContent == "Stop") {
+<<<<<<< HEAD
     document.querySelector("#togglebtn").textContent = "Start";
 
     seq_host.stop();
@@ -705,10 +726,25 @@ document.getElementById("togglebtn").onclick = function () {
  
 
   
+=======
+    document.querySelector("#togglebtn").textContent = "Start"
+  }
+  else {
+    document.querySelector("#togglebtn").textContent = "Stop"
+  }
+  seq_guest.cancel();
+  bd.triggerRelease("+0.05");
+  cymbal.triggerRelease("+0.07");
+  seq_host.stop("+0.09");
+  animation_host.stop("+0.12");
+  animation_guest.stop("+0.13");
+  Tone.Transport.toggle("+0.2");
+>>>>>>> parent of abc7d99... PORCOILDIOOOOOO
   
 };
 
 document.getElementById("backbtn").onclick = function () {
+<<<<<<< HEAD
 if (document.querySelector("#togglebtn").textContent == "Stop") {
   ShowPage(0);
 
@@ -723,6 +759,16 @@ else{
   ShowPage(0);
 }
    
+=======
+  ShowPage(0);
+  seq_guest.cancel();
+  bd.triggerRelease("+0.05");
+  cymbal.triggerRelease("+0.07");
+  seq_host.stop("+0.09");
+  animation_host.stop("+0.12");
+  animation_guest.stop("+0.13");
+  Tone.Transport.stop("+0.2");
+>>>>>>> parent of abc7d99... PORCOILDIOOOOOO
 }
 
 document.getElementById("coset_toggle").onclick = function () {
