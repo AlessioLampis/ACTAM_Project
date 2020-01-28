@@ -95,33 +95,22 @@ var cymbal = new Tone.MetalSynth({
   resonance: 4000,
   octaves: 1.5
 });
+
 xd.toMaster();
 bd.toMaster();
 cymbal.toMaster();
+Tone.context.latencyHint = 'fastest';
+Tone.context.lookAhead = 0;
 
 //Tone.js LOOP
 //let CrossLoop = new Tone.Loop(play, "4n");
 //CrossLoop.start(0);
 
-var seq_host = new Tone.Sequence(function(time, note){
-  bd.triggerAttackRelease(note, "+0.05", time);
-//straight quater notes
-}, ["F3", "F2" , "F2" , "F2"], "4n");
 
 
 var seq_guest;
 
 var seq_guest_timing;
-
-seq_guest = new Tone.Sequence(function(time, note){
-  cymbal.triggerAttackRelease(note, "8n", time);
-//modulation of duration
-}, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
-
-seq_host = new Tone.Sequence(function(time, note){
-  bd.triggerAttackRelease(note, "8n", time);
-//straight quater notes
-}, ["F4", "F4" , "F4" , "F4"], Tone.Time("4n").toSeconds());
 
 var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
@@ -209,6 +198,7 @@ selectors[0].style.color = "#dce1d5";
 
 // Function that allow to switch page
 function ShowPage(n) {
+  document.querySelector("#togglebtn").textContent = "Stop";
   guest = document.getElementById("guest" + (n + 1));
   host = document.getElementById("host" + (n + 1));
   var x = document.getElementsByClassName("page");
@@ -608,6 +598,8 @@ function calculate_pie() {
   free_guest_beats = [];
   free_host_beats = [];
   free_coset_beats = [];
+  notes_guest = [];
+  notes_host = [];
   
  // create the array for the tatum_representation (with subdivision)
   for (var i = 0; i < sub; i++) {
@@ -624,10 +616,22 @@ function calculate_pie() {
 
   for(var y = 0; y < guest_accents; y++) {
     free_guest_beats.push(true);
+    if(y==0){
+      notes_guest.push("C5")
+    }
+    else{
+      notes_guest.push("C4")
+    };
   };
 
-  for(var z = 0; z < guest_accents; z++) {
+  for(var z = 0; z < host_accents; z++) {
     free_host_beats.push(true);
+    if(z==0){
+      notes_host.push("F3")
+    }
+    else{
+      notes_host.push("F2")
+    };
   };
 };
 
@@ -643,7 +647,7 @@ function play_guest(time) {
 };
 
 function play_host(time) {
-  animate_host({ timing: backEaseOut, draw: drawPie_host, duration: (60000) / (Tone.Transport.bpm.value) });
+  animate_host({ timing: backEaseOut, draw: drawPie_host, duration: (30000) / (Tone.Transport.bpm.value) });
 }
 
 
@@ -663,32 +667,42 @@ document.getElementById("startbtn").onclick = function () {
   Tone.start();
   ShowPage(3);
   calculate_pie();
+
   seq_guest = new Tone.Sequence(function(time, note){
     xd.triggerAttackRelease(note, "8n", time);
-  //modulation of duration
-  }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
-  
+
+  }, notes_guest, (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+
+  seq_host = new Tone.Sequence(function(time, note){
+    bd.triggerAttackRelease(note, "8n", time);
+  //straight quater notes
+  }, notes_host, "4n");
+
   seq_host.start(); //no delay in 
   seq_guest.start();
 
-  //animation_host.start();
-  //animation_guest.start();
+  animation_host.start();
+  animation_guest.start();
   
- // animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
-  Tone.Transport.start();
+  animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+  animation_host.interval = "4n";
+  Tone.Transport.start("+1");
+
+
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
 };
 
 document.getElementById("togglebtn").onclick = function () {
   if (document.querySelector("#togglebtn").textContent == "Stop") {
-    document.querySelector("#togglebtn").textContent = "Start";
 
+    document.querySelector("#togglebtn").textContent = "Start";
+  
     seq_host.stop();
     seq_guest.stop();
   
-    //animation_host.stop();
-    //animation_guest.stop();  
+    animation_host.stop();
+    animation_guest.stop();  
   }
   else {
     
@@ -696,34 +710,38 @@ document.getElementById("togglebtn").onclick = function () {
     seq_host.start();
     seq_guest.start();
   
-    //animation_host.start();
-    //animation_guest.start();
+    animation_host.start();
+    animation_guest.start();
 
     
     
   }
  
-
-  
-  
 };
 
 document.getElementById("backbtn").onclick = function () {
+
+  Tone.Transport.stop();
+  ShowPage(0);
+  seq_host.stop();
+  seq_guest.stop();
+  animation_host.stop();
+  animation_guest.stop();
+
 if (document.querySelector("#togglebtn").textContent == "Stop") {
   ShowPage(0);
 
-  seq_host.stop();//no delay
+  seq_host.stop();
   seq_guest.stop();
-  //animation_host.stop();
-  //animation_guest.stop(); 
-  seq_guest.delete();
+  animation_host.stop();
+  animation_guest.stop(); 
+
   Tone.Transport.stop()
 }
 else{
   ShowPage(0);
 }
-   
-}
+};
 
 document.getElementById("coset_toggle").onclick = function () {
   check_coset();
