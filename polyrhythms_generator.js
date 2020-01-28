@@ -632,13 +632,21 @@ document.documentElement.addEventListener('mousedown', function(){
 });
 
 document.getElementById("startbtn").onclick = function () {
+<<<<<<< Updated upstream
   time = Tone.now();
+=======
+  
+>>>>>>> Stashed changes
   Tone.start();
   ShowPage(3);
   calculate_pie();
 
   seq_guest = new Tone.Sequence(function(time, note){
+<<<<<<< Updated upstream
     cymbal.triggerAttackRelease(note, "8n", time + 0.05);
+=======
+    xd.triggerAttackRelease(note, "8n", time);
+>>>>>>> Stashed changes
   //modulation of duration
   }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
@@ -647,6 +655,7 @@ document.getElementById("startbtn").onclick = function () {
   //straight quater notes
   }, ["F3", "F2" , "F2" , "F2"], Tone.Time("4n").toSeconds());
   
+<<<<<<< Updated upstream
   seq_host.start("+0.05"); //no delay in 
   seq_guest.start("+0.07");
 
@@ -655,6 +664,10 @@ document.getElementById("startbtn").onclick = function () {
   
   animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
   Tone.Transport.start("+0.5");
+=======
+ // animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+  Tone.Transport.start();
+>>>>>>> Stashed changes
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
 };
@@ -679,6 +692,7 @@ document.getElementById("togglebtn").onclick = function () {
     animation_guest.start("+0.13");
     
     
+<<<<<<< Updated upstream
     animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";;
     document.querySelector("#togglebtn").textContent = "Stop"
   }
@@ -689,11 +703,17 @@ document.getElementById("togglebtn").onclick = function () {
   seq_host.stop("+0.09");
   animation_host.stop("+0.12");
   animation_guest.stop("+0.13");
+=======
+  }
+ 
+
+>>>>>>> Stashed changes
   
   
 };
 
 document.getElementById("backbtn").onclick = function () {
+<<<<<<< Updated upstream
   Tone.Transport.stop();
   ShowPage(0);
   seq_guest.cancel();
@@ -702,6 +722,22 @@ document.getElementById("backbtn").onclick = function () {
   seq_host.stop("+0.09");
   animation_host.stop("+0.12");
   animation_guest.stop("+0.13");
+=======
+if (document.querySelector("#togglebtn").textContent == "Stop") {
+  ShowPage(0);
+
+  seq_host.stop();//no delay
+  seq_guest.stop();
+  //animation_host.stop();
+  //animation_guest.stop(); 
+  seq_guest.delete();
+  Tone.Transport.stop()
+}
+else{
+  ShowPage(0);
+}
+   
+>>>>>>> Stashed changes
 }
 
 document.getElementById("coset_toggle").onclick = function () {
