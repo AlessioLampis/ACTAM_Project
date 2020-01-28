@@ -2,7 +2,6 @@
 ///
 //**THINGS TO DO**//
 ///
-
 //FIX THE SOUNDS!!
 // 1 FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
 // 2 ADD SHIFTING IN COSET
@@ -10,7 +9,6 @@
 // 4 stop the coset when changes are appied on it
 // 5 CHANGE THE SOUNDS 
 // 6 ADD ANOTHER SET OF SOUNDS
-
 // FIX ANIMATION OF PIES
 // 7 Fix positioning and add transition between pages, especially the first page's shadow
 // 8 START TO DEVELOP POLYMETER SECTION
@@ -66,6 +64,25 @@ var bd = new Tone.MembraneSynth({
   }
 });
 
+var xd = new Tone.MembraneSynth({
+  pitchDecay: 0.05,
+  octaves: 4,
+  oscillator: {
+    type: "fmsine",
+    phase: 140,
+    modulationType: "sine",
+    modulationIndex: 0.8,
+    partials: [1] //1,0.1,0.01,0.01
+  },
+  envelope: {
+    attack: 0.01,
+    decay: 0.74,
+    sustain: 0.71,
+    release: 0.05,
+    attackCurve: "exponential"
+  }
+});
+
 var cymbal = new Tone.MetalSynth({
   frequency: 800,
   envelope: {
@@ -78,7 +95,7 @@ var cymbal = new Tone.MetalSynth({
   resonance: 4000,
   octaves: 1.5
 });
-
+xd.toMaster();
 bd.toMaster();
 cymbal.toMaster();
 
@@ -86,27 +103,38 @@ cymbal.toMaster();
 //let CrossLoop = new Tone.Loop(play, "4n");
 //CrossLoop.start(0);
 
-var seq_host;
+var seq_host = new Tone.Sequence(function(time, note){
+  bd.triggerAttackRelease(note, "+0.05", time);
+//straight quater notes
+}, ["F3", "F2" , "F2" , "F2"], "4n");
+
 
 var seq_guest;
+
+var seq_guest_timing;
+
+seq_guest = new Tone.Sequence(function(time, note){
+  cymbal.triggerAttackRelease(note, "8n", time);
+//modulation of duration
+}, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+
+seq_host = new Tone.Sequence(function(time, note){
+  bd.triggerAttackRelease(note, "8n", time);
+//straight quater notes
+}, ["F4", "F4" , "F4" , "F4"], Tone.Time("4n").toSeconds());
 
 var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_host();
-  }, time + 0.01)
+  }, time)
 }, "4n");
 
 var animation_guest = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
     play_guest();
-  }, time + 0.02)
+  }, time)
 }, "4n");
 
-
-
-let event = new Tone.Event( function(time,note ){ // Event is not a constructor? DAFFUCCCk
-  triggerAttackRelease(note, "4n")},
-["C4" , "G4", "F4"]);
 
 
 //Pop's circle animation (not used yet)
@@ -608,10 +636,10 @@ function calculate_pie() {
 
 function play_guest(time) {
  
-  animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (30007*host_accents/Tone.Transport.bpm.value)/guest_accents });
+  animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (30000*host_accents/Tone.Transport.bpm.value)/guest_accents });
   
   if (coset == true) {
-    animate({ timing: backEaseOut, draw: drawPie_coset, duration: (30005) / (Tone.Transport.bpm.value) });
+    animate({ timing: backEaseOut, draw: drawPie_coset, duration: (30000) / (Tone.Transport.bpm.value) });
   };
 };
 
@@ -632,30 +660,26 @@ document.documentElement.addEventListener('mousedown', function(){
 });
 
 document.getElementById("startbtn").onclick = function () {
-<<<<<<< Updated upstream
+
   time = Tone.now();
-=======
-  
->>>>>>> Stashed changes
+
   Tone.start();
   ShowPage(3);
   calculate_pie();
 
   seq_guest = new Tone.Sequence(function(time, note){
-<<<<<<< Updated upstream
+
     cymbal.triggerAttackRelease(note, "8n", time + 0.05);
-=======
+
     xd.triggerAttackRelease(note, "8n", time);
->>>>>>> Stashed changes
-  //modulation of duration
+
   }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
   seq_host = new Tone.Sequence(function(time, note){
     bd.triggerAttackRelease(note, "8n", time);
   //straight quater notes
   }, ["F3", "F2" , "F2" , "F2"], Tone.Time("4n").toSeconds());
-  
-<<<<<<< Updated upstream
+
   seq_host.start("+0.05"); //no delay in 
   seq_guest.start("+0.07");
 
@@ -664,18 +688,82 @@ document.getElementById("startbtn").onclick = function () {
   
   animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
   Tone.Transport.start("+0.5");
-=======
+
  // animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
   Tone.Transport.start();
->>>>>>> Stashed changes
+
+  
+
+  Tone.start();
+  ShowPage(3);
+  calculate_pie();
+  seq_guest = new Tone.Sequence(function(time, note){
+
+    xd.triggerAttackRelease(note, "8n", time);
+  //modulation of duration
+  }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+  
+  seq_host.start(); //no delay in 
+  seq_guest.start();
+
+  //animation_host.start();
+  //animation_guest.start();
+  
+ // animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+  Tone.Transport.start();
+
+    cymbal.triggerAttackRelease(note, "+0.05", time);
+  //modulation of duration
+  }, ["C5", "C5" , "C5" , "C5"], (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
+
+  seq_host.start("+0.1");
+  seq_guest.start("+0.11");
+
+  animation_host.start("+0.12");
+  animation_guest.start("+0.13");
+  
+  Tone.Transport.start("+0.5");
+  animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+
+
+
+
   end = performance.now();
   console.log("Call to do the whole function took " + (end - start) + " milliseconds.");
 };
 
 document.getElementById("togglebtn").onclick = function () {
   if (document.querySelector("#togglebtn").textContent == "Stop") {
+
     document.querySelector("#togglebtn").textContent = "Start";
     Tone.Transport.stop();
+
+    document.querySelector("#togglebtn").textContent = "Start";
+
+    seq_host.stop();
+    seq_guest.stop();
+  
+    //animation_host.stop();
+    //animation_guest.stop();  
+  }
+  else {
+    
+  document.querySelector("#togglebtn").textContent = "Stop"
+    seq_host.start();
+    seq_guest.start();
+  
+    //animation_host.start();
+    //animation_guest.start();
+
+    
+    
+  }
+ 
+
+  
+
+    document.querySelector("#togglebtn").textContent = "Start"
+
   }
   else {
     
@@ -691,29 +779,27 @@ document.getElementById("togglebtn").onclick = function () {
     animation_host.start("+0.09");
     animation_guest.start("+0.13");
     
-    
-<<<<<<< Updated upstream
+
     animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";;
     document.querySelector("#togglebtn").textContent = "Stop"
   }
- 
+
   seq_guest.cancel();
   bd.triggerRelease("+0.05");
   cymbal.triggerRelease("+0.07");
   seq_host.stop("+0.09");
   animation_host.stop("+0.12");
   animation_guest.stop("+0.13");
-=======
   }
  
 
->>>>>>> Stashed changes
-  
+  Tone.Transport.toggle("+0.2");
+
   
 };
 
 document.getElementById("backbtn").onclick = function () {
-<<<<<<< Updated upstream
+
   Tone.Transport.stop();
   ShowPage(0);
   seq_guest.cancel();
@@ -722,7 +808,7 @@ document.getElementById("backbtn").onclick = function () {
   seq_host.stop("+0.09");
   animation_host.stop("+0.12");
   animation_guest.stop("+0.13");
-=======
+
 if (document.querySelector("#togglebtn").textContent == "Stop") {
   ShowPage(0);
 
@@ -737,8 +823,16 @@ else{
   ShowPage(0);
 }
    
->>>>>>> Stashed changes
-}
+
+  ShowPage(0);
+  seq_guest.cancel();
+  bd.triggerRelease("+0.05");
+  cymbal.triggerRelease("+0.07");
+  seq_host.stop("+0.09");
+  animation_host.stop("+0.12");
+  animation_guest.stop("+0.13");
+  Tone.Transport.stop("+0.2");
+
 
 document.getElementById("coset_toggle").onclick = function () {
   check_coset();
@@ -754,6 +848,3 @@ tm.onchange = function () {
   bpm = Math.floor(tm.value);
   Tone.Transport.bpm.value = bpm;
 };
-
-
-
