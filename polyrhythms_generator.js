@@ -66,23 +66,23 @@ var bd = new Tone.MembraneSynth({
 });
 
 var xd = new Tone.MembraneSynth({
-  pitchDecay: 0.05,
-  octaves: 4,
-  oscillator: {
-    type: "fmsine",
-    phase: 140,
-    modulationType: "sine",
-    modulationIndex: 0.8,
-    partials: [1] //1,0.1,0.01,0.01
-  },
-  envelope: {
-    attack: 0.01,
-    decay: 0.74,
-    sustain: 0.71,
-    release: 0.05,
-    attackCurve: "exponential"
-  }
-});
+    pitchDecay: 0.005,
+    octaves: 4,
+    oscillator: {
+      type: "fmsine",
+      phase: 140,
+      modulationType: "sine",
+      modulationIndex: 1,
+      partials: [1] //1,0.1,0.01,0.01
+    },
+    envelope: {
+      attack: 0.005,
+      decay: 0.74,
+      sustain: 0.71,
+      release: 0.05,
+      attackCurve: "exponential"
+    }
+  });
 
 var cymbal = new Tone.MetalSynth({
   frequency  : 200 ,
@@ -97,9 +97,22 @@ var cymbal = new Tone.MetalSynth({
   octaves  : 1.5
   });
 
-xd.toMaster();
-bd.toMaster();
-cymbal.toMaster();
+var reverb = new Tone.Reverb({
+    decay : 1000 ,
+    preDelay : 0.0001
+});
+var gain = new Tone.Gain(0.7);
+var comp = new Tone.Compressor({
+     ratio : 20 ,
+     threshold : -50 ,
+     release : 0.35 ,
+     attack : 0.0003 ,
+     knee : 30
+}).toMaster();
+
+xd.chain(gain, reverb, comp);
+bd.chain(gain, reverb, comp);
+cymbal.chain(gain, reverb, comp);
 Tone.context.latencyHint = 'fastest';
 Tone.context.lookAhead = 0;
 
@@ -690,13 +703,12 @@ document.getElementById("startbtn").onclick = function () {
 
   seq_guest = new Tone.Sequence(function(time, note){
 
-
-    xd.triggerAttackRelease(note, "8n", time);
+    xd.triggerAttackRelease('A1', "16n", time);
 
   }, notes_guest, (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
   seq_host = new Tone.Sequence(function(time, note){
-    bd.triggerAttackRelease(note, "8n", time);
+    bd.triggerAttackRelease('C2', "16n", time);
   //straight quater notes
   }, notes_host, "4n");
 
@@ -735,8 +747,6 @@ document.getElementById("togglebtn").onclick = function () {
     animation_host.start();
     animation_guest.start();
 
-    
-    
   }
  
 };
