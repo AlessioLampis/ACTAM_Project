@@ -732,12 +732,12 @@ document.getElementById("startbtn").onclick = function () {
   Tone.start();
   ShowPage(3);
   calculate_pie();
-  seq_guest_timing = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+  seq_guest_timing = (60*host_accents/Tone.Transport.bpm.value)/guest_accents + "s";
 
   seq_guest = new Tone.Sequence(function(time, note){
     xd.triggerAttackRelease(note, "8n", time);
 
-  }, notes_guest, (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents);
+  }, notes_guest, (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
   seq_host = new Tone.Sequence(function(time, note){
     bd.triggerAttackRelease(note, "8n", time);

@@ -354,8 +354,10 @@ margin-left:45%;
 }
 
 .inputcontainer{
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  top : 10%;
+  left : 0%;
+
  
 }
 
