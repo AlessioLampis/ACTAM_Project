@@ -65,37 +65,26 @@ var bd = new Tone.MembraneSynth({
   }
 });
 
-var xd = new Tone.MembraneSynth({
-    pitchDecay: 0.005,
-    octaves: 4,
-    oscillator: {
-      type: "fmsine",
-      phase: 140,
-      modulationType: "sine",
-      modulationIndex: 1,
-      partials: [1] //1,0.1,0.01,0.01
-    },
-    envelope: {
-      attack: 0.005,
-      decay: 0.74,
-      sustain: 0.71,
-      release: 0.05,
-      attackCurve: "exponential"
-    }
-  });
+var kick = new Tone.MembraneSynth();
 
-var cymbal = new Tone.MetalSynth({
-  frequency  : 200 ,
-  envelope  : {
-  attack  : 0 ,
-  decay  : 1 ,
-  release  : 0.2
-  } ,
-  harmonicity  : 1 ,
-  modulationIndex  : 5 ,
-  resonance  : 9500 ,
-  octaves  : 1.5
-  });
+
+var closedHiHat = new Tone.NoiseSynth({
+  volume : -10,
+  filter : {
+      Q : 1
+  },
+  envelope : {
+      attack : 0.01,
+      decay : 0.15
+  },
+  filterEnvelope : {
+      attack : 0.01,
+      decay : 0.03,
+      baseFrequency : 4000,
+      octaves : -2.5,
+      exponent : 4,
+  }
+});
 
 var reverb = new Tone.Reverb({
     decay : 1000 ,
@@ -110,9 +99,12 @@ var comp = new Tone.Compressor({
      knee : 30
 }).toMaster();
 
-xd.chain(gain, reverb, comp);
-bd.chain(gain, reverb, comp);
-cymbal.chain(gain, reverb, comp);
+//kick.chain(gain, reverb, comp);
+//bd.chain(gain, reverb, comp);
+//cymbal.chain(gain, reverb, comp);
+kick.toMaster();
+bd.toMaster();
+closedHiHat.toMaster();
 Tone.context.latencyHint = 'fastest';
 Tone.context.lookAhead = 0;
 
@@ -120,10 +112,7 @@ Tone.context.lookAhead = 0;
 //let CrossLoop = new Tone.Loop(play, "4n");
 //CrossLoop.start(0);
 
-
-
 var seq_guest;
-
 var seq_guest_timing;
 
 var animation_host = new Tone.Loop(function(time){
@@ -703,12 +692,12 @@ document.getElementById("startbtn").onclick = function () {
 
   seq_guest = new Tone.Sequence(function(time, note){
 
-    xd.triggerAttackRelease('A1', "16n", time);
+    kick.triggerAttackRelease('A1', "16n", time);
 
   }, notes_guest, (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
   seq_host = new Tone.Sequence(function(time, note){
-    bd.triggerAttackRelease('C2', "16n", time);
+    closedHiHat.triggerAttackRelease("16n", time);
   //straight quater notes
   }, notes_host, "4n");
 
