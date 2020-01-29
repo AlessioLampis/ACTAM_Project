@@ -770,3 +770,38 @@ tm.onchange = function () {
   bpm = Math.floor(tm.value);
   Tone.Transport.bpm.value = bpm;
 };
+
+
+document.getElementById("startbtn1").onclick = function () {
+  
+  Tone.start();
+  ShowPage(4);
+
+  Tone.Transport.start("+1");
+
+  end = performance.now();
+};
+
+document.getElementById("backbtn1").onclick = function () {
+
+  Tone.Transport.stop();
+  ShowPage(1);
+//  seq_host.stop();
+//  seq_guest.stop();
+//  animation_host.stop();
+//  animation_guest.stop();
+
+//if (document.querySelector("#togglebtn").textContent == "Stop") {
+//  ShowPage(1);
+
+//  seq_host.stop();
+//  seq_guest.stop();
+//  animation_host.stop();
+//  animation_guest.stop(); 
+
+//  Tone.Transport.stop()
+//}
+//else{
+//  ShowPage(1);
+//}
+};

@@ -231,9 +231,9 @@ svg path {
 .firstlogo {
   position: relative;
   display: block;
-  font-family:  "Helvetica Neue", Helvetica, sans-serif;
+  font-family: "Helvetica ", Helvetica, serif;
   font-weight: 600;
-  font-style: normal;
+  font-style: bold;
   font-size: 100px;
   text-align: center;
   letter-spacing: 1.5px;
@@ -294,6 +294,20 @@ svg path {
   transition: all 250ms linear;
 }
 
+.text {
+  position: relative;
+  display: block;
+  font-family: "Helvetica ", Helvetica, serif;
+  font-weight: 200;
+  font-style: bold;
+  font-size: 100px;
+  text-align: center;
+  letter-spacing: 1.5px;
+  color: #dce1d5;
+  line-height: 1;
+  -webkit-animation: logo 5s ease-in normal 1;
+  animation: logo 5s ease-in normal 1;
+}
 
 .semicolon{
   position: relative;
@@ -308,6 +322,11 @@ svg path {
 }
 
 .page4{
+  width: 1000px;
+  float: left; 
+}
+
+.page5 {
   width: 1000px;
   float: left; 
 }
@@ -328,13 +347,38 @@ svg path {
   float: center;
   cursor: pointer; 
 }
+
+#startbtn1{
+  position: relative;
+  background-color: #dce1d5;
+  color: black;
+  padding: 3px 10px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 24px;
+  text-align: center;
+  text-decoration: none;
+  margin: 0px 0px 5px;
+  font-size: 16px;
+  float: center;
+  cursor: pointer; 
+}
+
 #backbtn{
   background-color: #dce1d5;
   color: black;
   font-size: 16px;
   cursor: pointer; 
   width: 90px;
-margin-left:45%;
+  margin-left:45%;
+}
+
+#backbtn1{
+  background-color: #dce1d5;
+  color: black;
+  font-size: 16px;
+  cursor: pointer; 
+  width: 90px;
+  margin-left:45%;
 }
 
 #backbtn:hover{
@@ -345,6 +389,16 @@ margin-left:45%;
   text-decoration: none;
   transition: all 250ms linear; 
 }
+
+#backbtn1:hover{
+  background: black;
+  border: 1px solid black;
+  box-shadow: 0px 0px 2px #ebebeb, 0px 0px 2px #ebebeb;
+  color: #dce1d5;
+  text-decoration: none;
+  transition: all 250ms linear; 
+}
+
 .coset{ 
   position: relative; /* change all the element on this line with the justify-content: space-around*/
   display: inline-block;
@@ -464,6 +518,15 @@ input:checked + .slider:before {
 }
 
 #startbtn:hover{
+  background: black;
+  border: 1px solid black;
+  box-shadow: 0px 0px 2px #ebebeb, 0px 0px 2px #ebebeb;
+  color: #dce1d5;
+  text-decoration: none;
+  transition: all 250ms linear; 
+}
+
+#startbtn1:hover{
   background: black;
   border: 1px solid black;
   box-shadow: 0px 0px 2px #ebebeb, 0px 0px 2px #ebebeb;
