@@ -505,8 +505,7 @@ function animate_host({ timing, draw, duration }) { //animate function of DrawPi
 //DRAW GUEST AND HOST IN CROSS RHYTHM
 
 function drawPie_guest(progress) {  //GUEST PIE
-  free_guest_beats
-.forEach((beat, i) => {
+  free_guest_beats.forEach((beat, i) => {
     ctx.beginPath();
     ctx.lineWidth = "1.5";
     ctx.strokeStyle = "#dce1d5";
@@ -538,37 +537,7 @@ function drawPie_host(progress) {  //HOST PIE
 }
 
 
-function drawPie_free_guest(progress) {  //GUEST PIE
-  free_guest_beats.forEach((beat, i) => {
-    ctx.beginPath();
-    ctx.lineWidth = "1.5";
-    ctx.strokeStyle = "#dce1d5";
-    ctx.moveTo(x0, y0);
-    //ctx.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
-    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + i * alpha + progress * alpha + theta;
-    ctx.arc(x0, y0, rad, gamma, gamma + alpha);
-    ctx.lineTo(x0, y0);
-    ctx.fillStyle = i == 0 ? "yellow" : beat ? "red" : "black";
-    ctx.fill();
-    ctx.stroke();
-  });
-};
-
-function drawPie_free_host(progress) {  //HOST PIE
-  free_host_beats.forEach((beat, j) => {
-    ctx2.beginPath();
-    ctx2.lineWidth = "1.5";
-    ctx2.strokeStyle = "#dce1d5";
-    ctx2.moveTo(x1, y1);
-    //ctx2.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
-    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + j * alpha + progress * alpha + theta;
-    ctx2.arc(x1, y1, rad2, gamma, gamma + alpha);
-    ctx2.lineTo(x1, y1);
-    ctx2.fillStyle = j == 0 ? "yellow" : beat ? "red" : "black";
-    ctx2.fill();
-    ctx2.stroke();
-  });
-}
+ 
 
 
 //DRAW COSET IN CROSS RHYTHM
@@ -584,22 +553,6 @@ function check_coset() {  //Change the N in animate function
 
 
 
-function drawPie_coset(progress) {
-  
-  free_coset_beat.forEach((beat, j) => {
-    ctx3.beginPath();
-    ctx3.lineWidth = "1.5";
-    ctx3.strokeStyle = "#dce1d5";
-    ctx3.moveTo(x1, y1);
-    //ctx2.lineTo(x0+rad*Math.sin(i*alpha), y0-rad*Math.cos(i*alpha));
-    var gamma = (3 / 2) * Math.PI - (5 / 2) * alpha + j * alpha + progress * alpha + theta + s*alpha;
-    ctx3.arc(x1, y1, rad2, gamma, gamma + alpha);
-    ctx3.lineTo(x1, y1);
-    ctx3.fillStyle = j == 0 ? "yellow" : beat ? "red" : "black";
-    ctx3.fill();
-    ctx3.stroke();
-  });
-}
 
 
 /// TIMING FUNCTIONS FOR ANIMATIONS ///
@@ -653,31 +606,8 @@ function calculate_pie() {
   free_coset_beats = [];
   notes_guest = [];
   notes_host = [];
-  
- // create the array for the tatum_representation (with subdivision)
-  for (var i = 0; i < sub; i++) {
-    if(i % guest_accents == 0 && i % host_accents == 0){
-      guest_beats.push("3");
-    }
-    if(i % guest_accents == 0 && !(i % host_accents == 0) ){
-      guest_beats.push("2");
-    }
-    if(i % host_accents == 0 && !(i % guest_accents == 0) ){
-      guest_beats.push("1");
-    }
-    else{
-      guest_beats.push("0");
-    }
-    
-  };
 
-  for (var j = 0; j < sub; j++) {
-    j % host_accents == 0 ? host_beats.push(true) : host_beats.push(false);
-  };
 
-  for (var x = 0; x < sub; x++) {
-    x % coset_accents == 0 ? coset_beat.push(true) : coset_beat.push(false);
-  };
 
   for(var y = 0; y < guest_accents; y++) {
     free_guest_beats.push(true);
@@ -752,7 +682,7 @@ document.getElementById("startbtn").onclick = function () {
   animation_host.start();
   animation_guest.start();
   
-  animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value + 0.01)/guest_accents + "s";
+  animation_guest.interval = (60*host_accents/Tone.Transport.bpm.value)/guest_accents + "s";
   animation_host.interval = "4n";
 
   Tone.Transport.start("+1");
