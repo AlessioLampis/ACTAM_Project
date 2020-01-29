@@ -681,12 +681,12 @@ document.getElementById("startbtn").onclick = function () {
 
   seq_guest = new Tone.Sequence(function(time, note){
 
-    kick.triggerAttackRelease('A1', "16n", time);
+    kick.triggerAttackRelease('C1', "8n", time);
 
   }, notes_guest, (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
   seq_host = new Tone.Sequence(function(time, note){
-    closedHiHat.triggerAttackRelease("16n", time);
+    bd.triggerAttackRelease('A2', "8n", time);
   //straight quater notes
   }, notes_host, "4n");
 

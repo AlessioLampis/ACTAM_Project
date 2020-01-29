@@ -190,11 +190,17 @@ svg path {
   margin: 0;
 }
 .page .Quantity {
-  display: inline-block;
+  
   margin: 15px 15px 10px;
   position: relative;
   color:#b7b7b7 ;
 }
+
+.slash{
+  width: 100px;
+  height: 100px;
+}
+
 .page .Quantity input {
   color: #dce1d5;
   border-radius: 2px;
