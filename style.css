@@ -196,6 +196,34 @@ svg path {
   color:#b7b7b7 ;
 }
 
+.pl_mn{
+  font-size: 30px;
+}
+
+.plmn1{
+  position: relative;
+  left: -12.5%;
+  top: 30%;
+}
+
+.plmn2{
+  position: relative;
+  left: 13.5%;
+  top: 80%;
+}
+
+.plmn3{
+  position: relative;
+  left: -12.5%;
+  top: 30%;
+}
+
+.plmn4{
+  position: relative;
+  left: 13.5%;
+  top: 30%;
+}
+
 .slash{
   font-size: 60px;
   font-weight: 100px;
