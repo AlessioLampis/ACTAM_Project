@@ -1,20 +1,5 @@
 
-///
-//**THINGS TO DO**//
-///
-//FIX THE SOUNDS!!
-// 1 FIX BUG WITH COSET (WHEN ACTIVATES, ALL THE PIES GET CRAZY)
-// 2 ADD SHIFTING IN COSET
-// 3 MAKE THE COSET PLAY
-// 4 stop the coset when changes are appied on it
-// 5 CHANGE THE SOUNDS 
-// 6 ADD ANOTHER SET OF SOUNDS
-// FIX ANIMATION OF PIES
-// 7 Fix positioning and add transition between pages, especially the first page's shadow
-// 8 START TO DEVELOP POLYMETER SECTION
-// 9 Sometimes pies stop to rotate
-// 10 set bpm range or set slow and fast tempo
-// 11 examples with music sheets
+import {calculate_pie,  hostBeats, guestBeats, sub, guest1, host1 } from "./calc.mjs"
 
 ///
 //**MODEL**//
@@ -24,13 +9,9 @@
 //  Timing variables 
 let start = 0;
 let end = 0;
-var counter = 0; //Maybe we should add another one
 const tm = document.querySelector("#bpm") 
 var bpm = Math.floor(tm.value);
 
-
-//Tatum for every page (right now, we use only tatum1 for cross ryhthm)
-var tatum = { tatum1: 1, tatum2: 1, tatum3: 1 }; //LCM of each page
 
 //NAVIGATE THROUGHT PAGE variables
 var CurrentPage = 0; //page where you are 
@@ -39,78 +20,12 @@ var selectors = document.querySelectorAll("button"); //
 //PAGE NUMBER 0 variable
 let Btn = document.getElementsByClassName("firstbtn");
 
-//Crossrhythm variables
-var guest = document.getElementById("guest1");
-var host = document.getElementById("host1");
 
 //SOUNDS: TONE.JS SETUP
 
-var bd = new Tone.MembraneSynth({
-  pitchDecay: 0.05,
-  octaves: 4,
-  oscillator: {
-    type: "fmsine",
-    phase: 140,
-    modulationType: "sine",
-    modulationIndex: 0.8,
-    partials: [1] //1,0.1,0.01,0.01
-  },
-  envelope: {
-    attack: 0.01,
-    decay: 0.74,
-    sustain: 0.71,
-    release: 0.05,
-    attackCurve: "exponential"
-  }
-});
-
-var xd = new Tone.MembraneSynth({
-  pitchDecay: 0.05,
-  octaves: 4,
-  oscillator: {
-    type: "fmsine",
-    phase: 140,
-    modulationType: "sine",
-    modulationIndex: 0.8,
-    partials: [1] //1,0.1,0.01,0.01
-  },
-  envelope: {
-    attack: 0.01,
-    decay: 0.74,
-    sustain: 0.71,
-    release: 0.05,
-    attackCurve: "exponential"
-  }
-});
-
-var cymbal = new Tone.MetalSynth({
-  frequency: 800,
-  envelope: {
-    attack: 0.001,
-    decay: 1.4,
-    release: 0.2
-  },
-  harmonicity: 5.1,
-  modulationIndex: 32,
-  resonance: 4000,
-  octaves: 1.5
-});
-
-xd.toMaster();
-bd.toMaster();
-cymbal.toMaster();
-Tone.context.latencyHint = 'fastest';
-Tone.context.lookAhead = 0;
-
-//Tone.js LOOP
-//let CrossLoop = new Tone.Loop(play, "4n");
-//CrossLoop.start(0);
-
-
 
 var seq_guest;
-
-var seq_guest_timing;
+var seq_host;
 
 var animation_host = new Tone.Loop(function(time){
   Tone.Draw.schedule(function(){
@@ -124,7 +39,21 @@ var animation_guest = new Tone.Loop(function(time){
   }, time)
 }, "4n");
 
+var polyrhythmLoop = new Tone.Loop(
+ function(time){
+   let i = 0;
+   if(i == 0){
+     //play tutto
+   }
+   if(hostBeats[i]){
+     //play and animate host Tone.Draw.schedule...
+   }
+   if(guestBeats[i]){
+     //play and animate beat Tone.Draw.schedule...
+   }
+ }
 
+)
 
 //Pop's circle animation (not used yet)
 const container = document.getElementById("guest_circle_on_screen");
@@ -156,25 +85,14 @@ var y2 = canvas3.height / 2;
 var rad = 100;
 var rad2 = 100;
 var rad3 = 100;
-
-
-var sub = 6; //number of tatum
-var guest_accents = 3; // guest value
-var host_accents = 2; // host value
-var alpha_guest = 2 * Math.PI /guest_accents ; //angle of tatum reperesentation
-var alpha_host = 2 * Math.PI /host_accents ; //angle of tatum reperesentation
-var guest_beats = []; // guest array for tatum representation
-var host_beats = []; //host array for tatum representation
-var free_guest_beats = [];
-var free_host_beats = [];
-var free_coset_beats = [];
-var coset = false; //whether the coset is on or off
-var N = 2; //number used for animate with or without  coset
-var coset_beat = []; // coset array used in tatum representaion
-var coset_accents = guest_accents; // coset accents
-var s = 1; //switch of the coset
 var theta_guest = 0;
 var theta_host =0;
+var alpha_guest = 2 * Math.PI /guest_accents ; //angle of tatum reperesentation
+var alpha_host = 2 * Math.PI /host_accents ;
+var coset = false; //whether the coset is on or off
+
+var guest_accents = 3; // guest value
+var host_accents = 2; // host value
 
 /////
 //**FUNCTIONS**//
@@ -199,8 +117,7 @@ selectors[0].style.color = "#dce1d5";
 // Function that allow to switch page
 function ShowPage(n) {
   document.querySelector("#togglebtn").textContent = "Stop";
-  guest = document.getElementById("guest" + (n + 1));
-  host = document.getElementById("host" + (n + 1));
+  
   var x = document.getElementsByClassName("page");
   var buttons = document.getElementsByTagName("button");
   x[CurrentPage].style.display = "none";
@@ -244,190 +161,12 @@ selectors.forEach(select_button);
 
 //TATUMS 
 
-//CROSS RHYTHM TATUM Calculation
-guest.onchange = function () { //Guest value input
-  document.getElementById("guest" + (CurrentPage + 1)).value = Math.floor(
-    guest.value
-  );
-
-  if (guest.value > 8) {
-    guest.value = 8;
-    alert("Guest value can't exceed 8");
-  }
-  if (guest.value == 0) {
-    guest.value = 1;
-  }
-
-  if (guest.value < 0){
-    alert("Guest value must be positive");
-    guest.value = 1;
-  }
-  tatum_calculation();
-};
-
-host.onchange = function () { //Host value input
-  document.getElementById("host" + (CurrentPage + 1)).value = Math.floor(
-    host.value
-  );
-
-  if (host.value > 8) {
-    host.value = 8;
-    alert("Host value can't exceed 8");
-  }
-  if (host.value == 0) {
-    host.value = 1;
-  }
-  if (host.value < 0){
-    alert("Host value must be positive");
-    host.value = 1;
-  }
-  //tatum_calculation();
-};
-
-//POLYMETER Tatum
-
-guest2.onchange = function () { //N1 Numerator of rhythm number 1
-  document.getElementById("guest2").value = Math.floor(
-    guest2.value
-  );
-  if (guest2.value > 8) { //To change but I don't know how
-    guest2.value = 8;
-    alert("Guest value can't exceed 8"); // to change in "20(?)"
-  }
-  if (guest2.value == 0) {
-    guest2.value = 1;
-  }
-  if (guest2.value < 0){
-    alert("Host value must be positive");
-    guest2.value = 1;}
-  
-};
-
-host2.onchange = function () { // D1 Denumerator of rhythm number 2
-  document.getElementById("host2").value = Math.floor(
-    host2.value
-  );
-  if (host2.value > 16) { 
-    host2.value = 16;
-    
-  }
-  if (host2.value < 4) {
-    host2.value = 4;
-  }
-  
-  //tatum_calculation();
-};
-
-guest3.onchange = function () { //N2 Numerator of rhythm 2
-  document.getElementById("guest3").value = Math.floor(
-    guest3.value
-  );
-  if (guest3.value > 8) { //Same as N1
-    guest3.value = 8;
-    alert("Guest value can't exceed 8");
-  }
-  if (guest3.value == 0) {
-    guest3.value = 1;
-  }
-  if (guest3.value < 0){
-    alert("Host value must be positive");
-    guest3.value = 1;}
-  //tatum_calculation();
-};
-
-host3.onchange = function () {  // D2 Denominator of rhythm 2
-  document.getElementById("host3").value = Math.floor(
-    host3.value
-  );
-  if (host3.value > 16) { //Same as N1
-    host3.value = 16;
-    
-  }
-  if (host3.value < 4) {
-    host3.value = 4;
-  }
-};
-
-document.querySelector(".minus").onclick = function(){
-  host2.value = parseInt(host2.value)%2;
-  
-  if (host2.value > 16) { 
-    host2.value = 16;
-    
-  }
-  if (host2.value < 4) {
-    host2.value = 4;
-  }
-};
-
-document.querySelector(".plus").onclick = function(){
-    host2.value = parseInt(host2.value)*2;
-    
-    if (host2.value > 16) { 
-      host2.value = 16;
-      
-    }
-    if (host2.value < 4) {
-      host2.value = 4;
-    }
-  };
-
-document.querySelector(".minus2").onclick = function(){
-      host3.value = parseInt(host3.value)%2;
-      
-      if (host3.value > 16) { //Same as N1
-        host3.value = 16;
-        
-      }
-      if (host3.value < 4) {
-        host3.value = 4;
-      }
-    };
-
-document.querySelector(".plus2").onclick = function(){
-        host3.value = parseInt(host3.value)*2; 
-        
-        if (host3.value > 16) { //Same as N1
-          host3.value = 16;
-          
-        }
-        if (host3.value < 4) {
-          host3.value = 4;
-        }
-      };    
 
 
-// Cross Rhythm Tatum calculation
 
-function tatum_calculation() { //Only for Cross Rhythm
-  tatum["tatum1"] = lcm_two_numbers(
-    Math.floor(host1.value),
-    Math.floor(guest1.value)
-  );
-  
-}
 
-function lcm_two_numbers(x, y) {
-  if (x == 0) {
-    x = 1;
-  }
-  if (y == 0) {
-    y = 1;
-  }
-  if (typeof x !== "number" || typeof y !== "number") return false;
-  return Math.abs(x * y / gcd_two_numbers(x, y));
-}
 
-function gcd_two_numbers(x, y) {
-  x = Math.abs(x);
-  y = Math.abs(y);
-  while (y) {
-    var t = y;
-    y = x % y;
-    x = t;
-  }
-  return x;
-}
+
 
 //ANIMATION of POP Circle (not used yet)
 
@@ -587,48 +326,6 @@ var linEaseOut = makeEaseOut(linear);
 
 
 
-function calculate_pie() {
-  sub = tatum["tatum1"];
-  guest_accents = Math.floor(guest1.value); 
-  host_accents = Math.floor(host1.value);
-  coset_accents = guest_accents;
-  alpha_guest = 2 * Math.PI / guest_accents;
-  alpha_host= 2 * Math.PI / host_accents;
-
-  Tone.Transport.bpm.value = bpm;
-  //array with tatum
-  guest_beats = []; 
-  host_beats = [];
-  coset_beat = [];
-  //array with no tatum
-  free_guest_beats = [];
-  free_host_beats = [];
-  free_coset_beats = [];
-  notes_guest = [];
-  notes_host = [];
-
-
-
-  for(var y = 0; y < guest_accents; y++) {
-    free_guest_beats.push(true);
-    if(y==0){
-      notes_guest.push("C5")
-    }
-    else{
-      notes_guest.push("C4")
-    };
-  };
-
-  for(var z = 0; z < host_accents; z++) {
-    free_host_beats.push(true);
-    if(z==0){
-      notes_host.push("F3")
-    }
-    else{
-      notes_host.push("F2")
-    };
-  };
-};
 
 //PLAY FUNCTION
 
@@ -636,9 +333,6 @@ function play_guest(time) {
  
   animate_guest({ timing: backEaseOut, draw: drawPie_guest, duration: (30000*host_accents/Tone.Transport.bpm.value)/guest_accents });
   
-  if (coset == true) {
-    animate({ timing: backEaseOut, draw: drawPie_coset, duration: (30000) / (Tone.Transport.bpm.value) });
-  };
 };
 
 function play_host(time) {
@@ -658,11 +352,12 @@ document.documentElement.addEventListener('mousedown', function(){
 });
 
 document.getElementById("startbtn").onclick = function () {
-  
+   alpha_guest = 2 * Math.PI /guest_accents ; //angle of tatum reperesentation
+   alpha_host = 2 * Math.PI /host_accents ;
   Tone.start();
   ShowPage(3);
   calculate_pie();
-  seq_guest_timing = (60*host_accents/Tone.Transport.bpm.value)/guest_accents + "s";
+  
 
   seq_guest = new Tone.Sequence(function(time, note){
     xd.triggerAttackRelease(note, "8n", time);
@@ -756,3 +451,4 @@ tm.onchange = function () {
   bpm = Math.floor(tm.value);
   Tone.Transport.bpm.value = bpm;
 };
+
