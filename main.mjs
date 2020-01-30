@@ -1,18 +1,30 @@
+console.clear();
 
-import { calculate_pie, hostBeats, guestBeats, sub, guest1, host1 } from "./polyr.mjs"
-import{PolyrhythmPie} from "./pies.mjs" 
+import { calculate_pie, hostBeats, guestBeats, sub, guest1, host1, listenGuest, listenHost } from "./polyr.mjs"
+import { PolyrhythmPie } from "./pies.mjs"
+import { kick, openHiHat, closedHiHat } from "./sound.mjs"
+
 
 ///
 //**MODEL**//
 ///
+Tone.context.latencyHint = 'fastest';
+Tone.context.lookAhead = 0;
+
+//CANVAS VARIABLES
+const canvas = document.getElementById('myCanvas');
+const canvas2 = document.getElementById('myCanvas2');
 
 
 //  Timing variables 
 let start = 0;
 let end = 0;
+
 const tm = document.querySelector("#bpm")
 var bpm = Math.floor(tm.value);
 
+var smallPie;
+var largePie;
 
 //NAVIGATE THROUGHT PAGE variables
 var CurrentPage = 0; //page where you are 
@@ -23,22 +35,63 @@ let Btn = document.getElementsByClassName("firstbtn");
 
 
 //SOUNDS: LOOP
+var cnt1;
+
+guest1.onchange = (guest)=>{
+    listenGuest(guest);
+    smallPie = new PolyrhythmPie(200 / Math.sqrt(1.62), guest1.value, 1, canvas);
+}
+host1.onchange = (host)=>{
+    listenHost(host);
+    largePie = new PolyrhythmPie(200, host1.value, 0, canvas);
+}
+
+
+
+
+
 
 var polyrhythmLoop = new Tone.Loop(
     function (time) {
-        let i = 0;
-        if (i == 0) {
-            //play tutto
-        }
-        if (hostBeats[i]) {
-            //play and animate host Tone.Draw.schedule...
-        }
-        if (guestBeats[i]) {
-            //play and animate beat Tone.Draw.schedule...
-        }
-    }
+        if (cnt1 == 0) {
+            kick.triggerAttackRelease("C2", "16n");
+            openHiHat.triggerAttackRelease("16n");
+            Tone.Draw.schedule(
+                function () {
+                            smallPie.animate({
+                                timing: backEaseOut, duration: 300
+                            });
+                            largePie.animate({
+                                timing: backEaseOut, duration: 300
+                            })
+                        }, time);
+                } 
+        
 
-)
+        else if (hostBeats[cnt1]) {
+            closedHiHat.triggerAttackRelease("16n");
+
+                Tone.Draw.schedule(
+                    function () {
+                        largePie.animate(
+                            {
+                                timing: backEaseOut, duration: 300
+                            }
+                        )
+                    }, time);
+        }
+
+        else if (guestBeats[cnt1]) {
+            kick.triggerAttackRelease("C1", "16n");
+                Tone.Draw.schedule(
+                    function () {
+                        smallPie.animate({timing: backEaseOut, duration: 300})
+                        }, time);
+        }
+        cnt1++;
+        cnt1 = cnt1%sub;
+    }
+    , "4n");
 
 
 
@@ -52,10 +105,6 @@ var requestAnimationFrame =
 
 //Animation of cross rhythm pies
 
-//CANVAS VARIABLES
-const canvas = document.getElementById('myCanvas');
-const canvas2 = document.getElementById('myCanvas2');
-const canvas3 = document.getElementById('myCanvas3');
 
 
 /////
@@ -181,33 +230,11 @@ document.documentElement.addEventListener('mousedown', function () {
 });
 
 document.getElementById("startbtn").onclick = function () {
-    alpha_guest = 2 * Math.PI / guest_accents; //angle of tatum reperesentation
-    alpha_host = 2 * Math.PI / host_accents;
+    cnt1 = 0;
+    largePie.innerPie = smallPie;
     Tone.start();
     ShowPage(3);
-    calculate_pie();
-
-
-    seq_guest = new Tone.Sequence(function (time, note) {
-        xd.triggerAttackRelease(note, "8n", time);
-
-    }, notes_guest, (60 * host_accents / Tone.Transport.bpm.value) / guest_accents);
-
-    seq_host = new Tone.Sequence(function (time, note) {
-        bd.triggerAttackRelease(note, "8n", time);
-        //straight quater notes
-    }, notes_host, "4n");
-
-
-
-    seq_host.start(); //no delay in 
-    seq_guest.start();
-
-    animation_host.start();
-    animation_guest.start();
-
-    animation_guest.interval = (60 * host_accents / Tone.Transport.bpm.value) / guest_accents + "s";
-    animation_host.interval = "4n";
+    polyrhythmLoop.start();
 
     Tone.Transport.start("+1");
 
@@ -218,23 +245,14 @@ document.getElementById("startbtn").onclick = function () {
 
 document.getElementById("togglebtn").onclick = function () {
     if (document.querySelector("#togglebtn").textContent == "Stop") {
-
+        polyrhythmLoop.stop();
         document.querySelector("#togglebtn").textContent = "Start";
 
-        seq_host.stop();
-        seq_guest.stop();
-
-        animation_host.stop();
-        animation_guest.stop();
     }
     else {
-
+        
         document.querySelector("#togglebtn").textContent = "Stop"
-        seq_host.start();
-        seq_guest.start();
-
-        animation_host.start();
-        animation_guest.start();
+        polyrhythmLoop.start();
 
 
 
@@ -246,19 +264,12 @@ document.getElementById("backbtn").onclick = function () {
 
     Tone.Transport.stop();
     ShowPage(0);
-    seq_host.stop();
-    seq_guest.stop();
-    animation_host.stop();
-    animation_guest.stop();
+
 
     if (document.querySelector("#togglebtn").textContent == "Stop") {
+
+        polyrhythmLoop.start();
         ShowPage(0);
-
-        seq_host.stop();
-        seq_guest.stop();
-        animation_host.stop();
-        animation_guest.stop();
-
         Tone.Transport.stop()
     }
     else {
@@ -287,20 +298,20 @@ tm.onchange = function () {
 function back(timeFraction) {
     let x = 2.0;
     return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x);
-  }
-  
-  
-  function linear(timeFraction) {
+}
+
+
+function linear(timeFraction) {
     return timeFraction;
-  }
-  
-  // accepts a timing function, returns the transformed variant
-  function makeEaseOut(timing) {
+}
+
+// accepts a timing function, returns the transformed variant
+function makeEaseOut(timing) {
     return function (timeFraction) {
-      return 1 - timing(1 - timeFraction);
+        return 1 - timing(1 - timeFraction);
     }
-  }
-  
-  var backEaseOut = makeEaseOut(back);
-  var elEaseOut = makeEaseOut(elastic);
-  var linEaseOut = makeEaseOut(linear);
+}
+
+var backEaseOut = makeEaseOut(back);
+
+  //var linEaseOut = makeEaseOut(linear);

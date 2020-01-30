@@ -1,4 +1,5 @@
-
+const strongColors = ["#9C5400", "#9C2100", "#9C7100"]
+const weakColors = ["#371E00", "#370C00", "#372800"]
 
 class PolyrhythmPie {
     constructor(rad, sub, colorIndex, canvas) {

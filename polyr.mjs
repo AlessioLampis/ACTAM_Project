@@ -9,47 +9,48 @@ var hostBeats = [];
 
 
 //CROSS RHYTHM TATUM Calculation
-guest1.onchange = function () { //Guest value input
-    guest1.value = Math.floor(
-      guest1.value
+function listenGuest(guest) { //Guest value input
+    guest.value = Math.floor(
+      guest.value
     );
   
-    if (guest1.value > 8) {
-      guest1.value = 8;
+    if (guest.value > 8) {
+      guest.value = 8;
       alert("Guest value can't exceed 8");
     }
-    if (guest1.value == 0) {
-      guest1.value = 1;
+    if (guest.value == 0) {
+      guest.value = 1;
     }
   
-    if (guest1.value < 0){
+    if (guest.value < 0){
       alert("Guest value must be positive");
-      guest1.value = 1;
+      guest.value = 1;
     }
     tatum_calculation();
   };
   
-  host1.onchange = function () { //Host value input
-    host1.value = Math.floor(
-      host1.value
+  
+  function listenHost(host) { //Host value input
+    host.value = Math.floor(
+      host.value
     );
   
-    if (host1.value > 8) {
-      host1.value = 8;
+    if (host.value > 8) {
+      host.value = 8;
       alert("Host value can't exceed 8");
     }
-    if (host1.value == 0) {
-      host1.value = 1;
+    if (host.value == 0) {
+      host.value = 1;
     }
-    if (host1.value < 0){
+    if (host.value < 0){
       alert("Host value must be positive");
-      host1.value = 1;
+      host.value = 1;
     }
     tatum_calculation();
   };
 
   function tatum_calculation() { //Only for Cross Rhythm
-    sub = lcm_two_numbers(
+    sub = lcm(
       Math.floor(host1.value),
       Math.floor(guest1.value)
     );
@@ -57,7 +58,7 @@ guest1.onchange = function () { //Guest value input
   };
 
   
-function lcm_two_numbers(x, y) {
+function lcm(x, y) {
     if (x == 0) {
       x = 1;
     }
@@ -65,10 +66,10 @@ function lcm_two_numbers(x, y) {
       y = 1;
     }
     if (typeof x !== "number" || typeof y !== "number") return false;
-    return Math.abs(x * y / gcd_two_numbers(x, y));
+    return Math.abs(x * y / gcd(x, y));
   }
   
-  function gcd_two_numbers(x, y) {
+  function gcd(x, y) {
     x = Math.abs(x);
     y = Math.abs(y);
     while (y) {
@@ -98,4 +99,4 @@ function calculate_pie() {
   
   };
 
-  export{calculate_pie,  hostBeats, guestBeats, sub, guest1, host1 }
+  export{calculate_pie,  hostBeats, guestBeats, sub, guest1, host1, listenGuest, listenHost }
