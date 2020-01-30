@@ -256,16 +256,13 @@ guest.onchange = function () { //Guest value input
 
   if (guest.value > 8) {
     guest.value = 8;
-    alert("Guest value can't exceed 8");
   }
   if (guest.value == 0) {
     guest.value = 1;
   }
 
   if (guest.value < 0){
-    alert("Guest value must be positive");
     guest.value = 1;
-    alert("We see what you are trying to do there... No negative numbers!");
   }
   tatum_calculation();
 };
@@ -277,17 +274,14 @@ host.onchange = function () { //Host value input
 
   if (host.value > 8) {
     host.value = 8;
-    alert("Host value can't exceed 8");
   }
   if (host.value == 0) {
     host.value = 1;
   }
   if (host.value < 0){
-    alert("Host value must be positive");
     host.value = 1;
-    alert("We see what you are trying to do there... No negative numbers!");
   }
-  //tatum_calculation();
+  tatum_calculation();
 };
 
 //POLYMETER Tatum
@@ -295,7 +289,6 @@ host.onchange = function () { //Host value input
 document.querySelector(".minus1").onclick = function(){
   if (guest_num.value == 1) { 
     guest_num.value = 1;
-    alert("Positive numbers only!")
   }
   else {
     guest_num.value = Math.floor(guest_num.value) - 1;
@@ -312,14 +305,12 @@ document.querySelector(".minus2").onclick = function(){
   }
   else if (guest_denom.value == 4){
     guest_denom.value = 4;
-    alert("Values can only be 4, 8, or 16!")
   }
 };
 
 document.querySelector(".minus3").onclick = function(){
   if (host_num.value == 1) { 
     host_num.value = 1;
-    alert("Positive numbers only!")
   }
   else {
     host_num.value = Math.floor(host_num.value) - 1;
@@ -336,14 +327,12 @@ document.querySelector(".minus4").onclick = function(){
   }
   else if (host_denom.value == 4){
     host_denom.value = 4;
-    alert("Values can only be 4, 8, or 16!")
   }
 };
 
 document.querySelector(".plus1").onclick = function(){
     if (guest_num.value == 8) { 
-      guest_num.value = 8;
-      alert("Cannot exceed 8!");    
+      guest_num.value = 8;    
     }
     else {
       guest_num.value = Math.floor(guest_num.value) + 1;
@@ -358,15 +347,13 @@ document.querySelector(".plus2").onclick = function(){
     guest_denom.value = 16;   
   }
   else if (guest_denom.value == 16) { 
-    guest_denom.value = 16; 
-    alert("Values can only be 4, 8, or 16!")  
+    guest_denom.value = 16;  
   }
 };
 
 document.querySelector(".plus3").onclick = function(){
   if (host_num.value == 8) { 
-    host_num.value = 8;
-    alert("Cannot exceed 8!");    
+    host_num.value = 8;    
   }
   else {
     host_num.value = Math.floor(host_num.value) + 1;
@@ -381,8 +368,7 @@ document.querySelector(".plus4").onclick = function(){
     host_denom.value = 16;   
   }
   else if (host_denom.value == 16) { 
-    host_denom.value = 16; 
-    alert("Values can only be 4, 8, or 16!")  
+    host_denom.value = 16;  
   }
 };
 
@@ -393,11 +379,9 @@ guest_num.onchange = function () { //N1 Numerator of rhythm number 1
   );
   if (guest_num.value > 8) { //To change but I don't know how
     guest_num.value = 8;
-    alert("Value can't exceed 8"); // to change in "20(?)"
   }
   if (guest_num.value <= 0){
     guest_num.value = 1;
-    alert("We see what you are trying to do there... Positive numbers only!");
   }
   //tatum_calculation(); No tatum calculation but a function that calculate the 
 };
@@ -409,23 +393,19 @@ guest_denom.onchange = function () { // D1 Denumerator of rhythm number 2
   if (guest_denom.value > 8) { 
     if (guest_denom.value < 16){
       guest_denom.value = 16;
-      alert("Values can be only 4, 8 or 16!");
     }
     if (guest_denom.value > 16){
       guest_denom.value = 16;
-      alert("Values can be only 4, 8 or 16!");
     }
   }
   if (guest_denom.value > 4) {
     if (guest_denom.value < 8){
       guest_denom.value = 8;
-      alert("Values can be only 4, 8 or 16!");
     }
   }
   if (guest_denom.value < 4) {
     guest_denom.value = 4;
     if (guest_denom.value <= 0){
-      alert("We see what you are trying to do there... Positive numbers only!");
     }
     else{
       alert("Values can be only 4, 8 or 16!");
@@ -488,7 +468,7 @@ function tatum_calculation() { //Only for Cross Rhythm
     Math.floor(host1.value),
     Math.floor(guest1.value)
   );
-  
+  document.getElementById("result").value = tatum["tatum1"];
 }
 
 function lcm_two_numbers(x, y) {
