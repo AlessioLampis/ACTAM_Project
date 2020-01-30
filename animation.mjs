@@ -109,33 +109,6 @@ function drawCircle() {
 
 /// TIMING FUNCTIONS FOR ANIMATIONS ///
 
-function back(timeFraction) {
-    let x = 2.0;
-    return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x);
-  }
-  
-  function elastic(timeFraction) {
-    let x = 0.3;
-    return (
-      Math.pow(2, 10 * (timeFraction - 1)) *
-      Math.cos(20 * Math.PI * x / 3 * timeFraction)
-    );
-  }
-  
-  function linear(timeFraction) {
-    return timeFraction;
-  }
-  
-  // accepts a timing function, returns the transformed variant
-  function makeEaseOut(timing) {
-    return function (timeFraction) {
-      return 1 - timing(1 - timeFraction);
-    }
-  }
-  
-  var backEaseOut = makeEaseOut(back);
-  var elEaseOut = makeEaseOut(elastic);
-  var linEaseOut = makeEaseOut(linear);
   
   
   

@@ -1,5 +1,6 @@
 
 import { calculate_pie, hostBeats, guestBeats, sub, guest1, host1 } from "./polyr.mjs"
+import{PolyrhythmPie} from "./pies.mjs" 
 
 ///
 //**MODEL**//
@@ -21,23 +22,7 @@ var selectors = document.querySelectorAll("button"); //
 let Btn = document.getElementsByClassName("firstbtn");
 
 
-//SOUNDS: TONE.JS SETUP
-
-
-var seq_guest;
-var seq_host;
-
-var animation_host = new Tone.Loop(function (time) {
-    Tone.Draw.schedule(function () {
-        play_host();
-    }, time)
-}, "4n");
-
-var animation_guest = new Tone.Loop(function (time) {
-    Tone.Draw.schedule(function () {
-        play_guest();
-    }, time)
-}, "4n");
+//SOUNDS: LOOP
 
 var polyrhythmLoop = new Tone.Loop(
     function (time) {
@@ -55,10 +40,8 @@ var polyrhythmLoop = new Tone.Loop(
 
 )
 
-//Pop's circle animation (not used yet)
-const container = document.getElementById("guest_circle_on_screen");
-var pixelsPerFrame = 5;
-var angle = Math.PI / 2;
+
+
 
 //animation setup
 var requestAnimationFrame =
@@ -71,28 +54,9 @@ var requestAnimationFrame =
 
 //CANVAS VARIABLES
 const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
 const canvas2 = document.getElementById('myCanvas2');
-const ctx2 = canvas2.getContext('2d');
 const canvas3 = document.getElementById('myCanvas3');
-const ctx3 = canvas3.getContext('2d');
-var x0 = canvas.width / 2;
-var y0 = canvas.height / 2;
-var x1 = canvas2.width / 2;
-var y1 = canvas2.height / 2;
-var x2 = canvas3.width / 2;
-var y2 = canvas3.height / 2;
-var rad = 100;
-var rad2 = 100;
-var rad3 = 100;
-var theta_guest = 0;
-var theta_host = 0;
-var alpha_guest = 2 * Math.PI / guest_accents; //angle of tatum reperesentation
-var alpha_host = 2 * Math.PI / host_accents;
-var coset = false; //whether the coset is on or off
 
-var guest_accents = 3; // guest value
-var host_accents = 2; // host value
 
 /////
 //**FUNCTIONS**//
@@ -207,35 +171,11 @@ elementList.forEach(function (element) {
 
 
 
-
-
-
-
-
-
-
-
-
-//DRAW COSET IN CROSS RHYTHM
-
-function check_coset() {  //Change the N in animate function
-    if (coset == false) { //if N is 2, coset is disabled. It means that theta angle
-        N = 3;              // goes +alpha/N (because it is called two times during a rotation)
-    }
-    else {
-        N = 2; //when coset is added, animate function is called 3 times, so theta
-    };       // must be +alpha/3
-};
-
-
-
-
 /////
 //**CONTROLLER**//
 ////
 
-//trying to fix the problem while reload
-//document.addEventListener('DOMContentLoaded', function(event) { document.getElementsByClassName("page")[0].style.display = "none"});
+
 document.documentElement.addEventListener('mousedown', function () {
     if (Tone.context.state !== 'running') Tone.context.resume();
 });
@@ -341,3 +281,26 @@ tm.onchange = function () {
     Tone.Transport.bpm.value = bpm;
 };
 
+
+//TIMING FOR ANIMATION
+
+function back(timeFraction) {
+    let x = 2.0;
+    return Math.pow(timeFraction, 2) * ((x + 1) * timeFraction - x);
+  }
+  
+  
+  function linear(timeFraction) {
+    return timeFraction;
+  }
+  
+  // accepts a timing function, returns the transformed variant
+  function makeEaseOut(timing) {
+    return function (timeFraction) {
+      return 1 - timing(1 - timeFraction);
+    }
+  }
+  
+  var backEaseOut = makeEaseOut(back);
+  var elEaseOut = makeEaseOut(elastic);
+  var linEaseOut = makeEaseOut(linear);
