@@ -66,7 +66,7 @@ var bd = new Tone.MembraneSynth({
 });
 
 var kick = new Tone.MembraneSynth();
-
+var hat = new Tone.MetalSynth();
 
 var closedHiHat = new Tone.NoiseSynth({
   volume : -10,
@@ -90,7 +90,7 @@ var reverb = new Tone.Reverb({
     decay : 1000 ,
     preDelay : 0.0001
 });
-var gain = new Tone.Gain(0.7);
+var gain = new Tone.Gain(0.1).toMaster();
 var comp = new Tone.Compressor({
      ratio : 20 ,
      threshold : -50 ,
@@ -104,6 +104,7 @@ var comp = new Tone.Compressor({
 //cymbal.chain(gain, reverb, comp);
 kick.toMaster();
 bd.toMaster();
+hat.connect(gain);
 closedHiHat.toMaster();
 Tone.context.latencyHint = 'fastest';
 Tone.context.lookAhead = 0;
@@ -291,126 +292,99 @@ host.onchange = function () { //Host value input
 
 //POLYMETER Tatum
 
-guest2.onchange = function () { //N1 Numerator of rhythm number 1
-  document.getElementById("guest2").value = Math.floor(
-    guest2.value
+guest_num.onchange = function () { //N1 Numerator of rhythm number 1
+  document.getElementById("guest_num").value = Math.floor(
+    guest_num.value
   );
-  if (guest2.value > 8) { //To change but I don't know how
-    guest2.value = 8;
-    alert("Guest value can't exceed 8"); // to change in "20(?)"
+  if (guest_num.value > 8) { //To change but I don't know how
+    guest_num.value = 8;
+    alert("Value can't exceed 8"); // to change in "20(?)"
   }
-  if (guest2.value == 0) {
-    guest2.value = 1;
-  }
-  if (guest.value < 0){
-    guest.value = 1;
-    alert("We see what you are trying to do there... No negative numbers!");
+  if (guest_num.value <= 0){
+    guest_num.value = 1;
+    alert("We see what you are trying to do there... Positive numbers only!");
   }
   //tatum_calculation(); No tatum calculation but a function that calculate the 
 };
 
-host2.onchange = function () { // D1 Denumerator of rhythm number 2
-  document.getElementById("host2").value = Math.floor(
-    host2.value
+guest_denom.onchange = function () { // D1 Denumerator of rhythm number 2
+  document.getElementById("guest_denom").value = Math.floor(
+    guest_denom.value
   );
-  if (host2.value > 16) { 
-    host2.value = 16;
-    
-  }
-  if (host2.value < 4) {
-    host2.value = 4;
-  }
-  if (host.value < 0){
-    host.value = 1;
-    alert("We see what you are trying to do there... No negative numbers!");
-  }
-  tatum_calculation();
-};
-
-guest3.onchange = function () { //N2 Numerator of rhythm 2
-  document.getElementById("guest3").value = Math.floor(
-    guest3.value
-  );
-  if (guest3.value > 8) { //Same as N1
-    guest3.value = 8;
-    alert("Guest value can't exceed 8");
-  }
-  if (guest3.value == 0) {
-    guest3.value = 1;
-  }
-  if (guest.value < 0){
-    guest.value = 1;
-    alert("We see what you are trying to do there... No negative numbers!");
-  }
-  tatum_calculation();
-};
-
-host3.onchange = function () {  // D2 Denominator of rhythm 2
-  document.getElementById("host3").value = Math.floor(
-    host3.value
-  );
-  if (host3.value > 16) { //Same as N1
-    host3.value = 16;
-    
-  }
-  if (host3.value < 4) {
-    host3.value = 4;
-  }
-};
-
-document.querySelector(".minus").onclick = function(){
-  host2.value = parseInt(host2.value)%2;
-  
-  if (host2.value > 16) { 
-    host2.value = 16;
-    
-  }
-  if (host2.value < 4) {
-    host2.value = 4;
-  }
-  if (host.value < 0){
-    host.value = 1;
-    alert("We see what you are trying to do there... No negative numbers!");
-  }
-  tatum_calculation();
-};
-
-document.querySelector(".plus").onclick = function(){
-    host2.value = parseInt(host2.value)*2;
-    
-    if (host2.value > 16) { 
-      host2.value = 16;
-      
+  if (guest_denom.value > 8) { 
+    if (guest_denom.value < 16){
+      guest_denom.value = 16;
+      alert("Values can be only 4, 8 or 16!");
     }
-    if (host2.value < 4) {
-      host2.value = 4;
+    if (guest_denom.value > 16){
+      guest_denom.value = 16;
+      alert("Values can be only 4, 8 or 16!");
     }
-  };
+  }
+  if (guest_denom.value > 4) {
+    if (guest_denom.value < 8){
+      guest_denom.value = 8;
+      alert("Values can be only 4, 8 or 16!");
+    }
+  }
+  if (guest_denom.value < 4) {
+    guest_denom.value = 4;
+    if (guest_denom.value <= 0){
+      alert("We see what you are trying to do there... Positive numbers only!");
+    }
+    else{
+      alert("Values can be only 4, 8 or 16!");
+    }
+  }
+  //tatum_calculation();
+};
 
-document.querySelector(".minus2").onclick = function(){
-      host3.value = parseInt(host3.value)%2;
-      
-      if (host3.value > 16) { //Same as N1
-        host3.value = 16;
-        
-      }
-      if (host3.value < 4) {
-        host3.value = 4;
-      }
-    };
+host_num.onchange = function () { //N1 Numerator of rhythm number 1
+  document.getElementById("host_num").value = Math.floor(
+    host_num.value
+  );
+  if (host_num.value > 8) { //To change but I don't know how
+    host_num.value = 8;
+    alert("Value can't exceed 8"); // to change in "20(?)"
+  }
+  if (host_num.value <= 0){
+    host_num.value = 1;
+    alert("We see what you are trying to do there... Positive numbers only!");
+  }
+  //tatum_calculation(); No tatum calculation but a function that calculate the 
+};
 
-document.querySelector(".plus2").onclick = function(){
-        host3.value = parseInt(host3.value)*2; 
-        
-        if (host3.value > 16) { //Same as N1
-          host3.value = 16;
-          
-        }
-        if (host3.value < 4) {
-          host3.value = 4;
-        }
-      };    
-
+host_denom.onchange = function () { // D1 Denumerator of rhythm number 2
+  document.getElementById("host_denom").value = Math.floor(
+    host_denom.value
+  );
+  if (host_denom.value > 8) { 
+    if (host_denom.value < 16){
+      host_denom.value = 16;
+      alert("Values can be only 4, 8 or 16!");
+    }
+    if (host_denom.value > 16){
+      host_denom.value = 16;
+      alert("Values can be only 4, 8 or 16!");
+    }
+  }
+  if (host_denom.value > 4) {
+    if (host_denom.value < 8){
+      host_denom.value = 8;
+      alert("Values can be only 4, 8 or 16!");
+    }
+  }
+  if (host_denom.value < 4) {
+    host_denom.value = 4;
+    if (host_denom.value <= 0){
+      alert("We see what you are trying to do there... Positive numbers only!");
+    }
+    else{
+      alert("Values can be only 4, 8 or 16!");
+    }
+  }
+  //tatum_calculation();
+};
 
 // Cross Rhythm Tatum calculation
 
@@ -686,7 +660,7 @@ document.getElementById("startbtn").onclick = function () {
   }, notes_guest, (60*host_accents/Tone.Transport.bpm.value)/guest_accents);
 
   seq_host = new Tone.Sequence(function(time, note){
-    bd.triggerAttackRelease('A2', "8n", time);
+    hat.triggerAttackRelease('C1', "64n", time);
   //straight quater notes
   }, notes_host, "4n");
 

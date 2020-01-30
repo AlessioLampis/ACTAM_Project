@@ -5,6 +5,7 @@ console.clear();
 //noise.connect(noise_gain);
 
 var kick = new Tone.MembraneSynth();
+var hat = new Tone.MetalSynth();
 
 var closedHiHat = new Tone.NoiseSynth({
     volume : -10,
@@ -61,14 +62,15 @@ var comp = new Tone.Compressor({
 kick.chain(gain, reverb, comp);
 closedHiHat.chain(gain, reverb, comp);
 openHiHat.chain(gain, reverb, comp);
+hat.chain(gain, reverb, comp);
 
 //kick.toMaster();
 
 Tone.Transport.start();
 
 function play(){
-    kick.triggerAttackRelease('C1','8n');
-    closedHiHat.triggerAttackRelease('8n');
+    hat.triggerAttackRelease('C2','64n');
+    //closedHiHat.triggerAttackRelease('8n');
 }
 
 function stop(){

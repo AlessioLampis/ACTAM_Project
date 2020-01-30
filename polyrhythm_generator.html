@@ -103,24 +103,20 @@
 
       <div class="Quantity pol1">
         <label>Guest</label>
-        <input type="number" min="1" max="8" id="guest2" step="1" value="1" pattern="[1-8]*">
+        <input type="number" min="1" max="8" id="guest_num" step="1" value="1" pattern="[1-8]*">
         </input>
         <label class='slash'>/</label>
-        <input type="number" min="4" max="16" id="host2" step="4" value="4" pattern="[4-16]*" disabled="disabled"></input>
-        <span class = "sign plus" style = "cursor: pointer">+</span>
-        <span class = "sign minus" style = "cursor: pointer">-</span>
+        <input type="number" min="4" max="16" id="guest_denom" step="1" value="4" pattern="[4-8-16]*"></input>
       </div>
 
       <div class="semicolon">:</div>
 
       <div class="Quantity pol2">
         <label>Host</label>
-        <input type="number" min="1" max="8" id="guest3" step="1" value="1" pattern="[1-8]*">
+        <input type="number" min="1" max="8" id="host_num" step="1" value="1" pattern="[1-8]*">
         </input>
         <label class='slash'>/</label>
-        <input type="number" min="4" max="16" id="host3" step="4" value="4" pattern="[4-16]*" disabled="disabled"></input>
-        <span class = "sign plus2"  style = "cursor: pointer" >+</span>
-        <span class = "sign minus2" style = "cursor: pointer">-</span>
+        <input type="number" min="4" max="16" id="host_denom" step="1" value="4" pattern="[4-8-16]*"></input>
       </div>      
 
       <p>Tatum value:</p>
