@@ -119,7 +119,7 @@ svg path {
 .page {
   position: relative;
   display: none;
-  width: 500px;
+  width: 100%;
   color: white;
   background: black;
   font-family: "Source Code Pro", monospace;
@@ -302,7 +302,8 @@ svg path {
 }
 
 .page4{
-  width: 1000px;
+  
+  
   float: left; 
 }
 
@@ -514,6 +515,8 @@ input:checked + .slider:before {
   transition: all 250ms linear;
 }
 
+
+
 /* ANIMATIONS */
 @-webkit-keyframes logo {
   from {
@@ -611,4 +614,91 @@ canvas {
   to {
     opacity: 1;
   }
+}
+
+#snackbarGuest {
+  visibility: hidden;
+  min-width: 20px;
+  margin-left: -225px;
+  background-color: black;
+  color: #dce1d5;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 20%;
+  font-size: 12px;
+}
+
+#snackbarGuest.show {
+  visibility: visible;
+  -webkit-animation: snackIn 0.5s, snackOut 0.5s 2.5s;
+  animation: snackIn 0.5s, snackOut 0.5s 2.5s;
+}
+
+#snackbarHost {
+  visibility: hidden;
+  min-width: 20px;
+  margin-left: 80px;
+  background-color: black;
+  color:#dce1d5;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 20%;
+  font-size: 12px;
+}
+
+#snackbarHost.show {
+  visibility: visible;
+  -webkit-animation: snackIn 0.5s, snackOut 0.5s 2.5s;
+  animation: snackIn 0.5s, snackOut 0.5s 2.5s;
+}
+
+#snackbarTatum {
+  visibility: hidden;
+  min-width: 20px;
+  margin-left: 80px;
+  background-color: black;
+  color: #dce1d5;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 40%;
+  font-size: 12px;
+}
+
+#snackbarTatum.show {
+  visibility: visible;
+  -webkit-animation: snackIn 0.5s, snackOut 0.5s 2.5s;
+  animation: snackIn 0.5s, snackOut 0.5s 2.5s;
+}
+
+
+@-webkit-keyframes snackIn {
+  from { opacity: 0;} 
+  to { opacity: 1;}
+}
+
+@keyframes snackIn {
+  from { opacity: 0;}
+  to {opacity: 1;}
+}
+
+@-webkit-keyframes snackOut {
+  from { opacity: 1;} 
+  to { opacity: 0;}
+}
+
+@keyframes snackOut {
+  from { opacity: 1;}
+  to { opacity: 0;}
 }

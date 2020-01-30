@@ -1,12 +1,10 @@
 var guest1 = document.getElementById("guest1");
 var host1 = document.getElementById("host1");
 
-var sub = 6; //number of tatum
+var sub = 6; //number of tatum (subdivisions)
 
 var guestBeats = [];
 var hostBeats = [];
-
-
 
 
 
@@ -81,6 +79,7 @@ function lcm_two_numbers(x, y) {
     return x;
   }
   
+//calculates the array for playing sounds and animations called in play
 
 function calculate_pie() {
 
