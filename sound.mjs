@@ -61,4 +61,4 @@ hat.chain(gain, reverb, comp);
 //Tone.context.latencyHint = 'fastest';
 //Tone.context.lookAhead = 0;
 
-export{kick, openHiHat, closedHiHat}
+export{kick, openHiHat, closedHiHat, hat}

@@ -2,7 +2,7 @@ console.clear();
 
 import { calculate_pie, hostBeats, guestBeats, sub, guest1, host1, listenGuest, listenHost } from "./polyr.mjs"
 import { PolyrhythmPie } from "./pies.mjs"
-import { kick, openHiHat, closedHiHat } from "./sound.mjs"
+import { kick, openHiHat, closedHiHat, hat } from "./sound.mjs"
 
 
 ///
@@ -22,6 +22,7 @@ let end = 0;
 
 const tm = document.querySelector("#bpm")
 var bpm = Math.floor(tm.value);
+Tone.Transport.bpm.value = bpm;
 
 var smallPie;
 var largePie;
@@ -36,64 +37,65 @@ let Btn = document.getElementsByClassName("firstbtn");
 
 //SOUNDS: LOOP
 var cnt1;
+var polyrhythmLoop;
 
 guest1.onchange = (guest)=>{
     listenGuest(guest);
+    calculate_pie();
     smallPie = new PolyrhythmPie(200 / Math.sqrt(1.62), guest1.value, 1, canvas);
 }
 host1.onchange = (host)=>{
     listenHost(host);
+    calculate_pie();
     largePie = new PolyrhythmPie(200, host1.value, 0, canvas);
 }
 
 
-
-
-
-
-var polyrhythmLoop = new Tone.Loop(
-    function (time) {
-        if (cnt1 == 0) {
-            kick.triggerAttackRelease("C2", "16n");
-            openHiHat.triggerAttackRelease("16n");
-            Tone.Draw.schedule(
-                function () {
-                            smallPie.animate({
-                                timing: backEaseOut, duration: 300
-                            });
-                            largePie.animate({
-                                timing: backEaseOut, duration: 300
-                            })
-                        }, time);
-                } 
-        
-
-        else if (hostBeats[cnt1]) {
-            closedHiHat.triggerAttackRelease("16n");
-
+function createLoop(pieOut, pieIn){
+    var loop = new Tone.Loop(
+        function (time) {
+            if (cnt1 == 0) {
+                kick.triggerAttackRelease("C2", "16n");
+                hat.triggerAttackRelease("C2", "16n");
                 Tone.Draw.schedule(
                     function () {
-                        largePie.animate(
-                            {
-                                timing: backEaseOut, duration: 300
-                            }
-                        )
-                    }, time);
-        }
-
-        else if (guestBeats[cnt1]) {
-            kick.triggerAttackRelease("C1", "16n");
-                Tone.Draw.schedule(
-                    function () {
-                        smallPie.animate({timing: backEaseOut, duration: 300})
+                                pieIn.animate({
+                                    timing: backEaseOut, duration: 300
+                                });
+                                pieOut.animate({
+                                    timing: backEaseOut, duration: 300
+                                })
+                            }, time);
+                    } 
+            
+    
+            else if (guestBeats[cnt1]) {
+                hat.triggerAttackRelease("C2", "16n");               
+                    Tone.Draw.schedule(
+                        function () {
+                            pieOut.animate(
+                                {
+                                    timing: backEaseOut, duration: 300
+                                }
+                            )
                         }, time);
+            }
+    
+            else if (hostBeats[cnt1]) {
+                kick.triggerAttackRelease("C1", "16n");
+                    Tone.Draw.schedule(
+                        function () {
+                            pieIn.animate({timing: backEaseOut, duration: 300})
+                            }, time);
+            }
+            cnt1++;
+            cnt1 = cnt1%sub;
         }
-        cnt1++;
-        cnt1 = cnt1%sub;
-    }
-    , "4n");
+        , "4n");
+    
 
-
+    return loop;
+}
 
 
 //animation setup
@@ -211,10 +213,6 @@ elementList.forEach(function (element) {
             }
             );
         }
-
-
-
-
     };
 });
 
@@ -232,6 +230,7 @@ document.documentElement.addEventListener('mousedown', function () {
 document.getElementById("startbtn").onclick = function () {
     cnt1 = 0;
     largePie.innerPie = smallPie;
+    polyrhythmLoop = createLoop(largePie, smallPie);
     Tone.start();
     ShowPage(3);
     polyrhythmLoop.start();

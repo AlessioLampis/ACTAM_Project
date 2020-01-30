@@ -328,6 +328,7 @@ svg path {
   color: black;
   font-size: 16px;
   cursor: pointer; 
+  z-index: 2;
   width: 90px;
 margin-left:45%;
 }
