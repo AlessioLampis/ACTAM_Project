@@ -292,6 +292,101 @@ host.onchange = function () { //Host value input
 
 //POLYMETER Tatum
 
+document.querySelector(".minus1").onclick = function(){
+  if (guest_num.value == 1) { 
+    guest_num.value = 1;
+    alert("Positive numbers only!")
+  }
+  else {
+    guest_num.value = Math.floor(guest_num.value) - 1;
+  }
+};
+
+document.querySelector(".minus2").onclick = function(){
+  
+  if (guest_denom.value == 16) { 
+    guest_denom.value = 8;
+  }
+  else if (guest_denom.value == 8){
+    guest_denom.value = 4;
+  }
+  else if (guest_denom.value == 4){
+    guest_denom.value = 4;
+    alert("Values can only be 4, 8, or 16!")
+  }
+};
+
+document.querySelector(".minus3").onclick = function(){
+  if (host_num.value == 1) { 
+    host_num.value = 1;
+    alert("Positive numbers only!")
+  }
+  else {
+    host_num.value = Math.floor(host_num.value) - 1;
+  }
+};
+
+document.querySelector(".minus4").onclick = function(){
+  
+  if (host_denom.value == 16) { 
+    host_denom.value = 8;
+  }
+  else if (host_denom.value == 8){
+    host_denom.value = 4;
+  }
+  else if (host_denom.value == 4){
+    host_denom.value = 4;
+    alert("Values can only be 4, 8, or 16!")
+  }
+};
+
+document.querySelector(".plus1").onclick = function(){
+    if (guest_num.value == 8) { 
+      guest_num.value = 8;
+      alert("Cannot exceed 8!");    
+    }
+    else {
+      guest_num.value = Math.floor(guest_num.value) + 1;
+    }
+};
+
+document.querySelector(".plus2").onclick = function(){
+  if (guest_denom.value == 4) { 
+    guest_denom.value = 8;   
+  }
+  else if (guest_denom.value == 8) { 
+    guest_denom.value = 16;   
+  }
+  else if (guest_denom.value == 16) { 
+    guest_denom.value = 16; 
+    alert("Values can only be 4, 8, or 16!")  
+  }
+};
+
+document.querySelector(".plus3").onclick = function(){
+  if (host_num.value == 8) { 
+    host_num.value = 8;
+    alert("Cannot exceed 8!");    
+  }
+  else {
+    host_num.value = Math.floor(host_num.value) + 1;
+  }
+};
+
+document.querySelector(".plus4").onclick = function(){
+  if (host_denom.value == 4) { 
+    host_denom.value = 8;   
+  }
+  else if (host_denom.value == 8) { 
+    host_denom.value = 16;   
+  }
+  else if (host_denom.value == 16) { 
+    host_denom.value = 16; 
+    alert("Values can only be 4, 8, or 16!")  
+  }
+};
+
+
 guest_num.onchange = function () { //N1 Numerator of rhythm number 1
   document.getElementById("guest_num").value = Math.floor(
     guest_num.value

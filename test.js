@@ -44,12 +44,10 @@ var openHiHat = new Tone.NoiseSynth({
     }
 });
 
-var reverb = new Tone.Reverb({
-     decay : 1000 ,
-     preDelay : 0.0001
-});
-//var delay = new Tone.FeedbackDelay(0.5).toMaster();
-var gain = new Tone.Gain(0.7).toMaster();
+var rev_gain = new Tone.Gain(0.2);
+var reverb = new Tone.JCReverb(0.2);
+var delay = new Tone.FeedbackDelay(0.5);
+var gain = new Tone.Gain(0.9).toMaster();
 var comp = new Tone.Compressor({
      ratio : 20 ,
      threshold : -50 ,
@@ -59,17 +57,19 @@ var comp = new Tone.Compressor({
 }).toMaster();
 //
 //kick.chain(comp, reverb, gain );
-kick.chain(gain, reverb, comp);
+reverb.chain(rev_gain, kick, gain);
+kick.chain(reverb, gain);
 closedHiHat.chain(gain, reverb, comp);
 openHiHat.chain(gain, reverb, comp);
 hat.chain(gain, reverb, comp);
 
 //kick.toMaster();
-
+Tone.context.latencyHint = 'playback';
+//Tone.context.lookAhead = 0;
 Tone.Transport.start();
 
 function play(){
-    hat.triggerAttackRelease('C2','64n');
+    reverb.triggerAttackRelease('C1','64n');
     //closedHiHat.triggerAttackRelease('8n');
 }
 
